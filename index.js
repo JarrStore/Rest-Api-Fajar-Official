@@ -224,10 +224,3 @@ app.listen(port, () => {
   console.log(`Server berjalan di http://localhost:${port}`);
 });
 
-let file = require.resolve(__filename)
-fs.watchFile(file, () => {
-fs.unwatchFile(file)
-console.log(`Update ${__filename}`)
-delete require.cache[file]
-require(file)
-});
