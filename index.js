@@ -48,6 +48,42 @@ app.get('/docs', (req, res) => {
   res.sendFile(path.join(__dirname,  'docs.html'));
 });
 
+
+app.get('/api/ragbot', async (req, res) => {
+  try {
+    const message = req.query.message;
+    if (!message) {
+      return res.status(400).json({ error: 'Parameter "message" tidak ditemukan' });
+    }
+    const response = await ptz.ragBot(message);
+    res.status(200).json({
+      status: 200,
+      creator: "Fajar Official",
+      data: { response }
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Endpoint untuk degreeGuru
+app.get('/api/degreeguru', async (req, res) => {
+  try {
+    const { message }= req.query;
+    if (!message) {
+      return res.status(400).json({ error: 'Parameter "message" tidak ditemukan' });
+    }
+    const response = await ptz.degreeGuru(message);
+    res.status(200).json({
+      status: 200,
+      creator: "Fajar Official",
+      data: { response }
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 app.get("/samp", async (req, res) => {
     const ip = req.query.ip;
     const port = req.query.port;
@@ -88,41 +124,6 @@ app.get("/samp", async (req, res) => {
         console.error("Gagal mengakses server:", error);
         res.json({ status: "error", message: "❌ Server sedang offline atau tidak dapat diakses." });
     }
-});
-
-app.get('/api/ragbot', async (req, res) => {
-  try {
-    const message = req.query.message;
-    if (!message) {
-      return res.status(400).json({ error: 'Parameter "message" tidak ditemukan' });
-    }
-    const response = await ptz.ragBot(message);
-    res.status(200).json({
-      status: 200,
-      creator: "Fajar Official",
-      data: { response }
-    });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// Endpoint untuk degreeGuru
-app.get('/api/degreeguru', async (req, res) => {
-  try {
-    const { message }= req.query;
-    if (!message) {
-      return res.status(400).json({ error: 'Parameter "message" tidak ditemukan' });
-    }
-    const response = await ptz.degreeGuru(message);
-    res.status(200).json({
-      status: 200,
-      creator: "Fajar Official",
-      data: { response }
-    });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
 });
 
 // Endpoint untuk smartContract
