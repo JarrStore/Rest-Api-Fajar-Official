@@ -14,11 +14,15 @@ app.use(secure);
 const port = 3000;
 
 // Fungsi untuk mendapatkan status server SAMP
+const axios = require('axios');
+
+// Fungsi untuk mendapatkan status server SAMP dengan timeout
 async function getSampStats(ip, port) {
   try {
-    // Endpoint SAMP yang bisa mengirim data statistik server (bisa menggunakan query atau endpoint lain sesuai kebutuhan)
-    const response = await axios.get(`https://${ip}:${port}/query`);
-    
+    const response = await axios.get(`http://${ip}:${port}/query`, {
+      timeout: 10000  // Timeout set to 10 seconds
+    });
+
     if (response.data && response.data.info) {
       return {
         hostname: os.hostname(),
