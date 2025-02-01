@@ -18,25 +18,26 @@ const axios = require('axios');
 
 // Fungsi untuk mendapatkan status server SAMP dengan timeout
 async function getSampStats(ip, port) {
-  try {
-    const response = await axios.get(`http://${ip}:${port}/query`, {
-      timeout: 15000  // Timeout lebih lama, 15 detik
-    });
+  const url = `http://${ip}:${port}/info.json`; // Sesuaikan URL jika API berbeda
 
-    if (response.data && response.data.info) {
-      return {
-        hostname: os.hostname(),
-        gamemode: response.data.info.gamemode || 'Unknown',
-        mapname: response.data.info.mapname || 'Unknown',
-        max_players: response.data.info.max_players || 'Unknown',
-        players_online: response.data.info.players_online || 'Unknown',
-      };
-    } else {
-      return null;
+  try {
+    const response = await fetch(url, { timeout: 5000 }); // Timeout 5 detik
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
+
+    const data = await response.json();
+    
+    return {
+      hostname: data.hostname || 'Tidak diketahui',
+      players: data.players || 0,
+      maxPlayers: data.maxPlayers || 0,
+      mode: data.gamemode || 'Tidak diketahui',
+      map: data.mapname || 'Tidak diketahui',
+    };
   } catch (error) {
-    console.error('Error fetching server stats:', error);
-    return null;
+    console.error('Gagal mengambil data SAMP:', error.message);
+    return null; // Kembalikan null jika gagal
   }
 }
 
@@ -114,24 +115,29 @@ app.get('/api/degreeguru', async (req, res) => {
 });
 
 app.get('/samp', async (req, res) => {
-  const ip = req.query.ip;
-  const port = req.query.port;
+  const { ip, port } = req.query;
 
+  // Validasi input
   if (!ip || !port) {
     return res.status(400).json({ error: 'IP dan port harus disertakan' });
   }
 
+  const portNumber = Number(port);
+  if (!/^(\d{1,3}\.){3}\d{1,3}$/.test(ip) || isNaN(portNumber) || portNumber < 1 || portNumber > 65535) {
+    return res.status(400).json({ error: 'IP atau port tidak valid' });
+  }
+
   try {
-    const stats = await getSampStats(ip, port);
+    const stats = await getSampStats(ip, portNumber);
 
     if (stats) {
-      res.json(stats);
+      return res.json(stats);
     } else {
-      res.status(404).json({ error: 'Server tidak ditemukan atau tidak merespons' });
+      return res.status(404).json({ error: 'Server tidak ditemukan atau tidak merespons' });
     }
   } catch (error) {
     console.error('Error di server:', error);
-    res.status(504).json({ error: 'Server SAMP tidak merespons dalam waktu yang ditentukan' });
+    return res.status(504).json({ error: 'Server SAMP tidak merespons dalam waktu yang ditentukan' });
   }
 });
 
