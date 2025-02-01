@@ -84,7 +84,7 @@ app.get('/api/degreeguru', async (req, res) => {
   }
 });
 
-app.get("/samp", async (req, res) => {
+app.get("/api/samp", async (req, res) => {
     const ip = req.query.ip;
     const port = req.query.port;
 
