@@ -67,7 +67,9 @@ app.get('/api/ragbot', async (req, res) => {
 });
 
 app.get("/api/samp", async (req, res) => {
-    const { ip, port } = req.query;
+    const ip = req.query.ip;
+    const port = req.query
+      port;
 
     if (!ip || !port) {
         return res.status(400).json({ status: "error", message: "IP dan Port harus disertakan dalam query." });
