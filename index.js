@@ -13,6 +13,30 @@ app.use(cors());
 app.use(secure);
 const port = 3000;
 
+// Fungsi untuk mendapatkan status server SAMP
+async function getSampStats(ip, port) {
+  try {
+    // Endpoint SAMP yang bisa mengirim data statistik server (bisa menggunakan query atau endpoint lain sesuai kebutuhan)
+    const response = await axios.get(`http://${ip}:${port}/query`);
+    
+    if (response.data && response.data.info) {
+      return {
+        hostname: os.hostname(),
+        gamemode: response.data.info.gamemode || 'Unknown',
+        mapname: response.data.info.mapname || 'Unknown',
+        max_players: response.data.info.max_players || 'Unknown',
+        players_online: response.data.info.players_online || 'Unknown',
+      };
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error('Error fetching server stats:', error);
+    return null;
+  }
+}
+
+
 
 app.get('/stats', (req, res) => {
   const stats = {
@@ -82,6 +106,23 @@ app.get('/api/degreeguru', async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+});
+
+app.get('/samp', async (req, res) => {
+  const ip = req.query.ip;
+  const port = req.query.port;
+  
+  if (!ip || !port) {
+    return res.status(400).json({ error: 'IP dan port harus disertakan' });
+  }
+  
+  const stats = await getSampStats(ip, port);
+
+  if (stats) {
+    res.json(stats);
+  } else {
+    res.status(404).json({ error: 'Server tidak ditemukan' });
   }
 });
 
