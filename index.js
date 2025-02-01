@@ -88,33 +88,6 @@ app.get('/api/degreeguru', async (req, res) => {
   }
 });
 
-app.get('/samp', async (req, res) => {
-  const { ip, port } = req.query;
-
-  // Validasi input
-  if (!ip || !port) {
-    return res.status(400).json({ error: 'IP dan port harus disertakan' });
-  }
-
-  const portNumber = Number(port);
-  if (!/^(\d{1,3}\.){3}\d{1,3}$/.test(ip) || isNaN(portNumber) || portNumber < 1 || portNumber > 65535) {
-    return res.status(400).json({ error: 'IP atau port tidak valid' });
-  }
-
-  try {
-    const stats = await getSampStats(ip, portNumber);
-
-    if (stats) {
-      return res.json(stats);
-    } else {
-      return res.status(404).json({ error: 'Server tidak ditemukan atau tidak merespons' });
-    }
-  } catch (error) {
-    console.error('Error di server:', error);
-    return res.status(504).json({ error: 'Server SAMP tidak merespons dalam waktu yang ditentukan' });
-  }
-});
-
 
 // Endpoint untuk smartContract
 app.get('/api/smartcontract', async (req, res) => {
