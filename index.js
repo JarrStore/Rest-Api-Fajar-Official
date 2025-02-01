@@ -5,6 +5,8 @@ const os = require('os');
 const fs = require('fs');
 const ptz = require('./function/index') 
 const axios = require('axios')
+const SampQuery = require("samp-query");
+
 
 var app = express();
 app.enable("trust proxy");
@@ -44,6 +46,48 @@ app.get('/', (req, res) => {
 
 app.get('/docs', (req, res) => {
   res.sendFile(path.join(__dirname,  'docs.html'));
+});
+
+app.get("/samp", async (req, res) => {
+    const ip = req.query.ip;
+    const port = req.query.port;
+
+    if (!ip || !port) {
+        return res.status(400).json({ status: "error", message: "IP dan Port harus disertakan dalam query." });
+    }
+
+    const [host, portNumber] = ip.split(":"); // Jika IP diberikan dalam format "123.123.123.123:7777"
+
+    const options = { host: host || ip, port: parseInt(portNumber || port), timeout: 1000 };
+
+    try {
+        const response = await new Promise((resolve, reject) => {
+            SampQuery(options, (error, result) => {
+                if (error) reject(error);
+                else resolve(result);
+            });
+        });
+
+        const toString = (value) => value ?? "Tidak diketahui";
+
+        const statusMessage = `🌍 *Status Server SA-MP*\n\n` +
+            `📌 *Server:* ${toString(response.hostname)}\n` +
+            `🔗 *IP:PORT:* ${host || ip}:${portNumber || port}\n` +
+            `🎮 *Gamemode:* ${toString(response.gamemode)}\n` +
+            `🗺️ *Map:* ${toString(response.mapname)}\n` +
+            `👥 *Pemain:* ${toString(response.online)}/${toString(response.maxplayers)}\n` +
+            `🛠️ *Versi:* ${toString(response.version)}\n` +
+            `🌐 *Bahasa:* ${toString(response.language)}\n` +
+            `☁️ *Cuaca - Waktu:* ${toString(response.rules?.worldtime)} - ${toString(response.rules?.weather)}\n` +
+            `🔒 *Password:* ${response.passworded ? "Yes" : "No"}\n` +
+            `🔗 *Website:* ${response.rules?.weburl ? `https://${response.rules.weburl}` : "https://sa-mp.com"}`;
+
+        res.json({ status: "success", message: statusMessage });
+
+    } catch (error) {
+        console.error("Gagal mengakses server:", error);
+        res.json({ status: "error", message: "❌ Server sedang offline atau tidak dapat diakses." });
+    }
 });
 
 app.get('/api/ragbot', async (req, res) => {
