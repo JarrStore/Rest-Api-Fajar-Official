@@ -20,7 +20,7 @@ const axios = require('axios');
 async function getSampStats(ip, port) {
   try {
     const response = await axios.get(`http://${ip}:${port}/query`, {
-      timeout: 10000  // Timeout set to 10 seconds
+      timeout: 15000  // Timeout lebih lama, 15 detik
     });
 
     if (response.data && response.data.info) {
@@ -116,19 +116,25 @@ app.get('/api/degreeguru', async (req, res) => {
 app.get('/samp', async (req, res) => {
   const ip = req.query.ip;
   const port = req.query.port;
-  
+
   if (!ip || !port) {
     return res.status(400).json({ error: 'IP dan port harus disertakan' });
   }
-  
-  const stats = await getSampStats(ip, port);
 
-  if (stats) {
-    res.json(stats);
-  } else {
-    res.status(404).json({ error: 'Server tidak ditemukan' });
+  try {
+    const stats = await getSampStats(ip, port);
+
+    if (stats) {
+      res.json(stats);
+    } else {
+      res.status(404).json({ error: 'Server tidak ditemukan atau tidak merespons' });
+    }
+  } catch (error) {
+    console.error('Error di server:', error);
+    res.status(504).json({ error: 'Server SAMP tidak merespons dalam waktu yang ditentukan' });
   }
 });
+
 
 // Endpoint untuk smartContract
 app.get('/api/smartcontract', async (req, res) => {
