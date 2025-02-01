@@ -84,29 +84,16 @@ app.get('/api/degreeguru', async (req, res) => {
   }
 });
 
+app.get("/samp", async (req, res) => {
+    const { ip, port } = req.query;
 
-app.get("/api/samp", async (req, res) => {
-    const ipQuery = req.query.ip;
-    const portQuery = req.query.port;
-
-    let ip, port;
-
-    // Jika IP sudah dalam format "123.123.123.123:7777"
-    if (ipQuery && ipQuery.includes(":")) {
-        [ip, port] = ipQuery.split(":");
-    } else {
-        ip = ipQuery;
-        port = portQuery; // Gunakan port dari query jika ada
-    }
-
-    // Validasi IP dan Port
     if (!ip || !port) {
         return res.status(400).json({ status: "error", message: "IP dan Port harus disertakan dalam query." });
     }
 
-    port = parseInt(port); // Pastikan port adalah angka
+    const [host, portNumber] = ip.split(":"); // Jika IP diberikan dalam format "123.123.123.123:7777"
 
-    const options = { host: ip, port: port, timeout: 1000 };
+    const options = { host: host || ip, port: parseInt(portNumber || port), timeout: 1000 };
 
     try {
         const response = await new Promise((resolve, reject) => {
@@ -120,7 +107,7 @@ app.get("/api/samp", async (req, res) => {
 
         const statusMessage = `🌍 *Status Server SA-MP*\n\n` +
             `📌 *Server:* ${toString(response.hostname)}\n` +
-            `🔗 *IP:PORT:* ${ip}:${port}\n` +
+            `🔗 *IP:PORT:* ${host || ip}:${portNumber || port}\n` +
             `🎮 *Gamemode:* ${toString(response.gamemode)}\n` +
             `🗺️ *Map:* ${toString(response.mapname)}\n` +
             `👥 *Pemain:* ${toString(response.online)}/${toString(response.maxplayers)}\n` +
@@ -136,24 +123,6 @@ app.get("/api/samp", async (req, res) => {
         console.error("Gagal mengakses server:", error);
         res.json({ status: "error", message: "❌ Server sedang offline atau tidak dapat diakses." });
     }
-});
-
-// Endpoint untuk smartContract
-app.get('/api/smartcontract', async (req, res) => {
-  try {
-    const message = req.query.message;
-    if (!message) {
-      return res.status(400).json({ error: 'Parameter "message" tidak ditemukan' });
-    }
-    const response = await ptz.smartContract(message);
-    res.status(200).json({
-      status: 200,
-      creator: "Fajar Official",
-      data: { response }
-    });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
 });
 
 // Endpoint untuk blackboxAIChat
