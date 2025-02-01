@@ -5,7 +5,7 @@ const os = require('os');
 const fs = require('fs');
 const ptz = require('./function/index') 
 const axios = require('axios')
-const SampQuery = require("samp-query");
+const samp = require("samp-query");
 
 
 var app = express();
@@ -79,7 +79,7 @@ app.get("/api/samp", async (req, res) => {
 
     try {
         const response = await new Promise((resolve, reject) => {
-            SampQuery(options, (error, result) => {
+            samp(options, (error, result) => {
                 if (error) reject(error);
                 else resolve(result);
             });
