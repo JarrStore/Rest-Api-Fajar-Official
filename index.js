@@ -16,32 +16,6 @@ const port = 3000;
 // Fungsi untuk mendapatkan status server SAMP
 const axios = require('axios');
 
-// Fungsi untuk mendapatkan status server SAMP dengan timeout
-async function getSampStats(ip, port) {
-  const url = `http://${ip}:${port}/info.json`; // Sesuaikan URL jika API berbeda
-
-  try {
-    const response = await fetch(url, { timeout: 5000 }); // Timeout 5 detik
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    
-    return {
-      hostname: data.hostname || 'Tidak diketahui',
-      players: data.players || 0,
-      maxPlayers: data.maxPlayers || 0,
-      mode: data.gamemode || 'Tidak diketahui',
-      map: data.mapname || 'Tidak diketahui',
-    };
-  } catch (error) {
-    console.error('Gagal mengambil data SAMP:', error.message);
-    return null; // Kembalikan null jika gagal
-  }
-}
-
-
 
 app.get('/stats', (req, res) => {
   const stats = {
