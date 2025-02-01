@@ -17,7 +17,7 @@ const port = 3000;
 async function getSampStats(ip, port) {
   try {
     // Endpoint SAMP yang bisa mengirim data statistik server (bisa menggunakan query atau endpoint lain sesuai kebutuhan)
-    const response = await axios.get(`http://${ip}:${port}/query`);
+    const response = await axios.get(`https://${ip}:${port}/query`);
     
     if (response.data && response.data.info) {
       return {
