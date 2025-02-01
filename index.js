@@ -5,6 +5,7 @@ const os = require('os');
 const fs = require('fs');
 const ptz = require('./function/index') 
 const axios = require('axios')
+const samp = require('samp-query')
 
 var app = express();
 app.enable("trust proxy");
@@ -61,6 +62,67 @@ app.get('/api/ragbot', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+});
+
+app.get("/api/samp", async (req, res) => {
+    const ip = req.query.ip;
+    const port = req.query.port;
+
+    if (!ip || !port) {
+        return res.status(400).json({ error: "IP and port are required" });
+    }
+
+    const options = { host: ip, port: parseInt(port), timeout: 5000 }; // Increased timeout to 5 seconds
+
+    try {
+        console.log(`Querying server at ${ip}:${port}`); // Log server IP and port for debugging
+
+        const response = await new Promise((resolve, reject) => {
+            samp(options, (error, result) => {
+                if (error) {
+                    console.error("Query error:", error); // Log the error for better debugging
+                    reject(error);
+                } else {
+                    console.log("Query result:", result); // Log the result for better debugging
+                    resolve(result);
+                }
+            });
+        });
+
+        const toString = (value) => value ?? "Tidak diketahui";
+
+        const data = {
+            hostname: toString(response.hostname), // Nama server
+            gamemode: toString(response.gamemode), // Gamemode server
+            mapname: toString(response.mapname), // Nama map
+            onlinePlayers: toString(response.online), // Pemain online
+            maxPlayers: toString(response.maxplayers), // Maksimal pemain yang bisa login
+            serverVersion: toString(response.version), // Versi server
+            language: toString(response.language), // Bahasa server
+            weather: toString(response.rules?.weather), // Cuaca
+            worldTime: toString(response.rules?.worldtime), // Waktu dunia
+            pass: response.passworded ? "Yes" : "No", // Server password
+            weburl: response.rules?.weburl ? `https://${response.rules.weburl}` : "https://sa-mp.com"
+        };
+
+        res.json(data);
+
+    } catch (error) {
+        console.error("Gagal mengakses server:", error);
+
+        let errorMessage = "Server sedang offline atau tidak dapat diakses.";
+
+        // Check if error is related to host unavailability
+        if (error.code === 'ENOTFOUND' || error.code === 'ECONNREFUSED') {
+            errorMessage = "Tidak dapat menemukan host atau koneksi ditolak. Pastikan server aktif dan IP serta port yang digunakan benar.";
+        } else if (error.code === 'ETIMEDOUT') {
+            errorMessage = "Waktu koneksi habis. Coba lagi nanti.";
+        } else if (error.code === 'ECONNRESET') {
+            errorMessage = "Koneksi server terputus. Coba lagi nanti.";
+        }
+
+        res.status(500).json({ error: errorMessage });
+    }
 });
 
 // Endpoint untuk degreeGuru
