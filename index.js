@@ -63,6 +63,25 @@ app.get('/api/ragbot', async (req, res) => {
   }
 });
 
+app.get('/api/ssweb', async (req, res, next) => {
+	const link = req.query.link
+	if (!link ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter link"})  
+
+	var islink = isUrl(link)
+	if (!islink ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter url sahaja"})  
+
+
+	ptz.ssweb(link).then((data) =>{ 
+		if (!data ) return res.json(loghandler.notfound)
+		res.set({'Content-Type': 'image/png'})
+		res.send(data)
+	}).catch((err) =>{
+	 res.json(loghandler.notfound)
+	
+	})
+
+});
+
 // Endpoint untuk degreeGuru
 app.get('/api/degreeguru', async (req, res) => {
   try {
