@@ -1,39 +1,26 @@
-const sampQuery = require('samp-query');
+const axios = require('axios');
 
 async function getServerStatus(ip, port) {
-    return new Promise((resolve, reject) => {
-        const options = {
-            host: ip,
-            port: parseInt(port, 10),
-            timeout: 1000 // Waktu timeout lebih lama
-        };
-
-        sampQuery(options, (error, response) => {
-            if (error) {
-                // Menangkap dan mencetak seluruh objek error untuk analisis lebih lanjut
-                console.error("Error details:", error); // Log error detail
-                console.error("Stack trace:", error.stack); // Stack trace jika ada
-
-                reject("Terjadi kesalahan saat menghubungi server.");
-            } else {
-                const serverStatus = `
-IP Server : ${options.host}:${options.port}
-Nama Server : ${response.hostname}
-Pemain Online : ${response.online}
-Max Pemain : ${response.maxplayers}
-GameMode : ${response.gamemode}
-Map : ${response.mapname}
-Version : ${response.rules.version}
-Weather : ${response.rules.weather}
-Url : ${response.rules.weburl}
-Time : ${response.rules.worldtime}
-Player : ${response.players}
+    try {
+        const response = await axios.get(`http://${ip}:${port}/status`);
+        return `
+IP Server : ${ip}:${port}
+Nama Server : ${response.data.hostname}
+Pemain Online : ${response.data.online}
+Max Pemain : ${response.data.maxplayers}
+GameMode : ${response.data.gamemode}
+Map : ${response.data.mapname}
+Version : ${response.data.version}
+Weather : ${response.data.weather}
+Url : ${response.data.url}
+Time : ${response.data.worldtime}
+Player : ${response.data.players}
 Status : Online ✅
-`;
-                resolve(serverStatus);
-            }
-        });
-    });
+        `;
+    } catch (error) {
+        console.error("Error details:", error);
+        return "Terjadi kesalahan saat menghubungi server.";
+    }
 }
 
 module.exports = getServerStatus;
