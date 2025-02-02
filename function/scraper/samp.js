@@ -5,19 +5,16 @@ async function getServerStatus(ip, port) {
         const options = {
             host: ip,
             port: parseInt(port, 10),
-            timeout: 5000 // Meningkatkan timeout lebih lama (5 detik)
+            timeout: 10000 // Waktu timeout lebih lama
         };
 
         sampQuery(options, (error, response) => {
             if (error) {
-                // Cek tipe error dan beri log detail untuk diagnosis lebih lanjut
-                console.error("Error details:", error);
-                
-                if (error.code === 'ETIMEOUT') {
-                    reject("Server sedang offline atau tidak merespons dalam waktu yang ditentukan.");
-                } else {
-                    reject("Terjadi kesalahan saat menghubungi server.");
-                }
+                // Menangkap dan mencetak seluruh objek error untuk analisis lebih lanjut
+                console.error("Error details:", error); // Log error detail
+                console.error("Stack trace:", error.stack); // Stack trace jika ada
+
+                reject("Terjadi kesalahan saat menghubungi server.");
             } else {
                 const serverStatus = `
 IP Server : ${options.host}:${options.port}
