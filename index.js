@@ -6,7 +6,6 @@ const fs = require('fs');
 const ptz = require('./function/index') 
 const axios = require('axios')
 const isUrl = require("is-url")
-const TikTokScraper = require('tiktok-scraper');
 
 function getBaseUrl(req) {
     return `${req.protocol}://${req.get('host')}`;
@@ -275,51 +274,6 @@ app.get("/api/ytmp3", async (req, res) => {
     }
 });
 
-app.get('/api/tiktok/stalk', async (req, res, next) => {
-        username = req.query.username
-
-    if (!username) return res.json(loghandler.notusername)
-
-
-    TikTokScraper.getUserProfileInfo(username)
-        .then(user => {
-            res.json({
-                status : true,
-                creator : `${creator}`,
-                result : user
-            })
-        })
-        .catch(e => {
-             res.json({
-                 status : false,
-                 creator : `${creator}`,
-                 message : "error, mungkin username anda tidak valid"
-             })
-         })
-});
-
-
-app.get('/api/stalker/freefire', async (req, res) => {
-    try {
-        var id = req.query.id;
-
-        if (!id) return res.json({ status: false, message: 'Parameter ID tidak ditemukan' });
-
-        let response = await fetch(`http://localhost:3000/api/stalker/freefire?id=${id}`);
-        let anu = await response.json();
-
-        if (!anu.result) return res.json({ status: false, message: 'Data tidak ditemukan' });
-
-        res.json({
-            status: true,
-            creator: creator,
-            result: anu.result
-        });
-    } catch (error) {
-        console.error(error);
-        res.json({ status: false, message: 'Terjadi kesalahan dalam server' });
-    }
-});
 
 app.get("/api/gpt", async (req, res) => {
 const text = req.query.text;
