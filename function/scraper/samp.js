@@ -4,13 +4,15 @@ async function getServerStatus(ip, port) {
     return new Promise((resolve, reject) => {
         const options = {
             host: ip,
-            port: parseInt(port, 10), // Pastikan port dalam bentuk angka
-            timeout: 1000
+            port: parseInt(port, 10),
+            timeout: 3000 // Menambah timeout agar lebih lama memberi kesempatan untuk merespons
         };
 
         sampQuery(options, (error, response) => {
             if (error) {
-                reject(`Server sedang offline atau tidak merespons.`); // Gunakan reject untuk error
+                // Menambahkan log error untuk debugging
+                console.error("Error detail:", error);
+                reject("Terjadi kesalahan saat menghubungi server."); // Pesan error lebih generik
             } else {
                 const serverStatus = `
 IP Server : ${options.host}:${options.port}
@@ -26,7 +28,7 @@ Time : ${response.rules.worldtime}
 Player : ${response.players}
 Status : Online ✅
 `;
-                resolve(serverStatus); // Resolusi status jika server online
+                resolve(serverStatus);
             }
         });
     });
