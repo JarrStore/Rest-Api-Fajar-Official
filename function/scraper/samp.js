@@ -13,7 +13,7 @@ async function getServerStatus(ip, port) {
                 resolve(`Server sedang offline atau tidak merespons.`);
             } else {
                 const serverStatus = `
-IP Server : ${options.host}:${options.port} Nama Server : ${response.hostname} Pemain Online : ${response.online} Max Pemain : ${response.maxplayers} GameMode : ${response.gamemode} Map : ${response.mapname} Version : ${response.rules.version} Weather : ${response.rules.weather} Url : ${response.rules.weburl} Time :  ${response.rules.worldtime} Player : ${response.players} Status : Online ✅
+IP Server : ${response.host}:${response.port} Nama Server : ${response.hostname} Pemain Online : ${response.online} Max Pemain : ${response.maxplayers} GameMode : ${response.gamemode} Map : ${response.mapname} Version : ${response.rules.version} Weather : ${response.rules.weather} Url : ${response.rules.weburl} Time :  ${response.rules.worldtime} Player : ${response.players} Status : Online ✅
 `;
                 resolve(serverStatus);
             }
