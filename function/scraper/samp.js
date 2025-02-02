@@ -5,7 +5,7 @@ async function getServerStatus(ip, port) {
         const options = {
             host: ip,
             port: parseInt(port, 10),
-            timeout: 10000 // Waktu timeout lebih lama
+            timeout: 1000 // Waktu timeout lebih lama
         };
 
         sampQuery(options, (error, response) => {
