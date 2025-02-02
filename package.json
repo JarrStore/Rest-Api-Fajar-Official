@@ -14,7 +14,7 @@
     "axios": "^1.7.7",
     "cors": "^2.8.5",
     "is-url": "^1.2.4",
-    "samp-query": "^5.1.0",
+    "samp-query": "^0.1.5",
     "node-fetch": "^2.6.1",
     "express": "^4.19.2",
     "query": "^0.2.0",
