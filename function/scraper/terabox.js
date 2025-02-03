@@ -75,4 +75,4 @@ const terabox = {
   },
 };
 
-module.exports = terabox;
+module.exports = teraboxdl;
