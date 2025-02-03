@@ -18,20 +18,20 @@ async function tiktokStalk(username) {
         const stats = userDetail.userInfo?.stats;
 
         const metadata = {
-            userInfo: {
-                id: userInfo?.id || null,
-                username: userInfo?.uniqueId || null,
-                nama: userInfo?.nickname || null,
-                avatar: userInfo?.avatarLarger || null,
-                bio: userInfo?.signature || null,
-                verifikasi: userInfo?.verified || false,
-                totalfollowers: stats?.followerCount || 0,
-                totalmengikuti: stats?.followingCount || 0,
-                totaldisukai: stats?.heart || 0,
-                totalvideo: stats?.videoCount || 0,
-                totalteman: stats?.friendCount || 0,
-            }
-        };
+    userInfo: {
+        id: userInfo?.id || null,
+        username: "Username: " + (userInfo?.uniqueId || '') + " ",
+        nama: "Nama: " + (userInfo?.nickname || '') + " ",
+        avatar: "Avatar: " + (userInfo?.avatarLarger || '') + " ",
+        bio: "Bio: " + (userInfo?.signature || '') + " ",
+        verifikasi: "Verifikasi: " + (userInfo?.verified ? "True" : "False") + " ",
+        totalfollowers: "Total Followers: " + (stats?.followerCount || 0) + " ",
+        totalmengikuti: "Total Mengikuti: " + (stats?.followingCount || 0) + " ",
+        totaldisukai: "Total Disukai: " + (stats?.heart || 0) + " ",
+        totalvideo: "Total Video: " + (stats?.videoCount || 0) + " ",
+        totalteman: "Total Teman: " + (stats?.friendCount || 0) + " "
+    }
+};
 
         return metadata;
     } catch (error) {
