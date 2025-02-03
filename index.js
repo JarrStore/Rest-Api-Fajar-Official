@@ -145,8 +145,6 @@ app.get('/api/downloader/capcut', async (req, res) => {
         return res.status(400).send('❌ URL is required. Example: /api/downloader/capcut?url=[CapCut URL]');
     }
 
-    res.send('Tunggu sebentar...');
-
     try {
         const result = await ptz.capcutdl(url); // Call the scraper function
 
