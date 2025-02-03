@@ -6,7 +6,6 @@ const fs = require('fs');
 const ptz = require('./function/index') 
 const axios = require('axios')
 const isUrl = require("is-url")
-const terabox = require('./function/scraper/terabox')
 
 var app = express();
 app.enable("trust proxy");
@@ -263,22 +262,6 @@ app.get("/api/translate", async (req, res) => {
     res.json({ status: true, creator: "Fajar Official", result: response.data.translatedText });
   } catch {
     res.status(500).json({ error: "An error occurred while processing the translation." });
-  }
-});
-
-app.get("/api/downloader/terabox", async (req, res) => {
-  const url = req.query.url;
-
-  if (!url) {
-    return res.status(400).json({ error: "Parameter URL diperlukan" });
-  }
-
-  try {
-    const files = await terabox.download(url);
-    const downloadLink = files.map(file => `<a href="${file.downloadUrl}" download>${file.filename}</a>`).join('<br>');
-    res.send(`<html><body>${downloadLink}</body></html>`);
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
   }
 });
 
