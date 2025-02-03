@@ -14,7 +14,7 @@ async function getServerStatus(ip, port) {
                 console.error("Error detail:", error); // Lihat apakah ada detail error yang berguna
                 reject("Terjadi kesalahan saat menghubungi server.");
             } else {
-                const serverStatus = `
+                const serverStatus = 
   "IP Server :" + options.host + ":" + options.port + " " +
   "Nama Server :" + response.hostname + " " +
   "Pemain Online :" + response.online + " " +
@@ -25,8 +25,7 @@ async function getServerStatus(ip, port) {
   "Weather :" + response.rules.weather + " " +
   "Url :" + response.rules.weburl + " " +
   "Time :" + response.rules.worldtime + " " +
-  "Status : Online ✅"
-  `;
+  "Status : Online ✅";
                 resolve(serverStatus);
             }
         });
