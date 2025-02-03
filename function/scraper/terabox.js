@@ -20,7 +20,9 @@ const terabox = {
           'sec-fetch-dest': 'empty',
           'sec-fetch-mode': 'cors',
           'sec-fetch-site': 'same-origin',
-          'cookie': 'your-cookie-value-here' // Include any necessary cookies
+          'cookie': 'your-cookie-value-here', // Include any necessary cookies
+          'x-forwarded-for': 'your-ip-address', // Set your IP address
+          'connection': 'keep-alive'
         }
       };
 
@@ -53,7 +55,9 @@ const terabox = {
           'sec-fetch-dest': 'empty',
           'sec-fetch-mode': 'cors',
           'sec-fetch-site': 'same-origin',
-          'cookie': 'your-cookie-value-here' // Include any necessary cookies
+          'cookie': 'your-cookie-value-here', // Include any necessary cookies
+          'x-forwarded-for': 'your-ip-address', // Set your IP address
+          'connection': 'keep-alive'
         },
         data: data
       };
