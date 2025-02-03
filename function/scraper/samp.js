@@ -15,10 +15,10 @@ async function getServerStatus(ip, port) {
                 reject("Terjadi kesalahan saat menghubungi server.");
             } else {
                 const serverStatus = 
-  "IP Server :" + options.host + ":" + options.port + " " +
-  "Nama Server :" + response.hostname + " " +
-  "Pemain Online :" + response.online + " " +
-  "Max Pemain :" + response.maxplayers + " " +
+  "IPServer :" + options.host + ":" + options.port + " " +
+  "NamaServer :" + response.hostname + " " +
+  "PemainOnline :" + response.online + " " +
+  "MaxPemain :" + response.maxplayers + " " +
   "GameMode :" + response.gamemode + " " +
   "Map :" + response.mapname + " " +
   "Version :" + response.rules.version + " " +
