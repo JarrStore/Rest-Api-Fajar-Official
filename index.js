@@ -149,7 +149,7 @@ app.get('/api/downloader/capcut', async (req, res) => {
         const result = await ptz.capcutdl(url); // Call the scraper function
 
         if (!result) {
-            return res.status(404).send('❌ Gagal mendapatkan data. Pastikan URL yang dimasukkan benar.');
+            return res.status(400).json({ error: '❌ Gagal mendapatkan data. Pastikan URL yang dimasukkan benar.')};
         }
 
         const cpt = `*乂 C A P C U T - D O W N L O A D E R*\n\n   ◦ Title : ${result.title}\n   ◦ Date : ${result.date}\n   ◦ Pengguna : ${result.pengguna}\n   ◦ Likes : ${result.likes}\n   ◦ Author : ${result.author.name}`;
