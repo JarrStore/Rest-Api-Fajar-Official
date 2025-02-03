@@ -15,17 +15,17 @@ async function getServerStatus(ip, port) {
                 reject("Terjadi kesalahan saat menghubungi server.");
             } else {
                 const serverStatus = 
-  "IP Server : " + options.host + ":" + options.port +
-  "Nama Server : " + response.hostname +
-  "Pemain Online : " + response.online +
-  "Max Pemain : " + response.maxplayers +
-  "GameMode : " + response.gamemode +
-  "Map : " + response.mapname +
-  "Version : " + response.rules.version +
-  "Weather : " + response.rules.weather +
-  "Url : " + response.rules.weburl +
-  "Time : " + response.rules.worldtime +
-  "Player : " + response.rules.players +
+  "IP Server :" + options.host + ":" + options.port + " " +
+  "Nama Server :" + response.hostname + " " +
+  "Pemain Online :" + response.online + " " +
+  "Max Pemain :" + response.maxplayers + " " +
+  "GameMode :" + response.gamemode + " " +
+  "Map :" + response.mapname + " " +
+  "Version :" + response.rules.version + " " +
+  "Weather :" + response.rules.weather + " " +
+  "Url :" + response.rules.weburl + " " +
+  "Time :" + response.rules.worldtime + " " +
+  "Player :" + response.players + " " +
   "Status : Online ✅";
                 resolve(serverStatus);
             }
