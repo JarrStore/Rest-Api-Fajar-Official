@@ -26,7 +26,7 @@ async function getServerStatus(ip, port) {
   "Url :" + response.rules.weburl + " " +
   "Time :" + response.rules.worldtime + " " +
   "Status : Online ✅"
-  "Player: " + response.players + " " + [];
+  "Player: " + response.players.map(player => player.name).join(", ");
                 resolve(serverStatus);
             }
         });
