@@ -19,7 +19,8 @@ const terabox = {
           'origin': 'https://terabox.hnn.workers.dev',
           'sec-fetch-dest': 'empty',
           'sec-fetch-mode': 'cors',
-          'sec-fetch-site': 'same-origin'
+          'sec-fetch-site': 'same-origin',
+          'cookie': 'your-cookie-value-here' // Include any necessary cookies
         }
       };
 
@@ -51,7 +52,8 @@ const terabox = {
           'origin': 'https://terabox.hnn.workers.dev',
           'sec-fetch-dest': 'empty',
           'sec-fetch-mode': 'cors',
-          'sec-fetch-site': 'same-origin'
+          'sec-fetch-site': 'same-origin',
+          'cookie': 'your-cookie-value-here' // Include any necessary cookies
         },
         data: data
       };
