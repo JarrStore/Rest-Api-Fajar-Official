@@ -269,6 +269,21 @@ app.get("/api/translate", async (req, res) => {
   }
 });
 
+app.get("/api/downloader/terabox", async (req, res) => {
+  const url = req.query.url;
+
+  if (!url) {
+    return res.status(400).json({ error: "Parameter URL diperlukan" });
+  }
+
+  try {
+    const files = await ptz.terabox(url);
+    res.json({ success: true, files });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 app.get("/api/ytmp3", async (req, res) => {
     const url = req.query.url;
     if (!url) return res.status(400).json({ error: "Url is required." });
