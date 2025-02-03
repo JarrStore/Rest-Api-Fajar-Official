@@ -273,7 +273,7 @@ app.get("/api/downloader/terabox", async (req, res) => {
   }
 
   try {
-    const files = await ptz.teraboxdl(url);
+    const files = await ptz.download(url);
 
     if (files.length === 0) {
       return res.status(404).json({ success: false, error: "File tidak ditemukan" });
