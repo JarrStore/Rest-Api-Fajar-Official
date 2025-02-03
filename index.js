@@ -266,7 +266,7 @@ app.get("/api/translate", async (req, res) => {
   }
 });
 
-app.get("/api/terabox", async (req, res) => {
+app.get("/api/downloader/terabox", async (req, res) => {
   const url = req.query.url;
 
   if (!url) {
@@ -275,7 +275,8 @@ app.get("/api/terabox", async (req, res) => {
 
   try {
     const files = await terabox.download(url);
-    res.json({ success: true, files });
+    const downloadLink = files.map(file => `<a href="${file.downloadUrl}" download>${file.filename}</a>`).join('<br>');
+    res.send(`<html><body>${downloadLink}</body></html>`);
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
