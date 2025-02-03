@@ -7,10 +7,6 @@ const ptz = require('./function/index')
 const axios = require('axios')
 const isUrl = require("is-url")
 
-function getBaseUrl(req) {
-    return `${req.protocol}://${req.get('host')}`;
-}
-
 var app = express();
 app.enable("trust proxy");
 app.set("json spaces", 2);
