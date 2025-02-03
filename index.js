@@ -320,6 +320,29 @@ app.get("/api/ytmp3", async (req, res) => {
     }
 });
 
+app.get('/api/search/ttstalk', async (req, res) => {
+    const username = req.query.username;
+
+    if (!username) {
+        return res.status(400).json({ error: 'Masukkan username TikTok yang ingin Anda stalk. Contoh: /api/search/ttstalk?username=username' });
+    }
+
+    try {
+        const result = await ptz.tiktokStalk(username);
+        const { userInfo } = result;
+
+        let message = `[ User Metadata ]\n\n`;
+        message += Object.entries(userInfo)
+            .map(([key, value]) => `- ${key.charAt(0).toUpperCase() + key.slice(1)}: ${value}`)
+            .join("\n");
+
+        res.json({ message });
+
+    } catch (error) {
+        res.status(500).json({ error: `Gagal mengambil data: ${error.message}` });
+    }
+});
+
 app.get("/api/gpt", async (req, res) => {
 const text = req.query.text;
 
