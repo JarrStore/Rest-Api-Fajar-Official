@@ -1,3 +1,4 @@
 module.exports = {
-  getServerStatus: require('./scraper/samp')
+  getServerStatus: require('./scraper/samp'),
+  Google: require('./scraper/Google')
 }
