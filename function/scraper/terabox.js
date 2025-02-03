@@ -12,10 +12,14 @@ const terabox = {
         method: 'GET',
         url: `https://terabox.hnn.workers.dev/api/get-info?shorturl=${surl}&pwd=`,
         headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36',
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36',
+          'accept': 'application/json, text/plain, */*',
           'accept-language': 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7',
           'referer': 'https://terabox.hnn.workers.dev/',
           'origin': 'https://terabox.hnn.workers.dev',
+          'sec-fetch-dest': 'empty',
+          'sec-fetch-mode': 'cors',
+          'sec-fetch-site': 'same-origin'
         }
       };
 
@@ -39,11 +43,15 @@ const terabox = {
         method: 'POST',
         url: 'https://terabox.hnn.workers.dev/api/get-download',
         headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36',
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36',
           'Content-Type': 'application/json',
+          'accept': 'application/json, text/plain, */*',
           'accept-language': 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7',
           'referer': 'https://terabox.hnn.workers.dev/',
           'origin': 'https://terabox.hnn.workers.dev',
+          'sec-fetch-dest': 'empty',
+          'sec-fetch-mode': 'cors',
+          'sec-fetch-site': 'same-origin'
         },
         data: data
       };
