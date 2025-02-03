@@ -25,7 +25,6 @@ async function getServerStatus(ip, port) {
   "Weather :" + response.rules.weather + " " +
   "Url :" + response.rules.weburl + " " +
   "Time :" + response.rules.worldtime + " " +
-  "Player :" + response.players + " " +
   "Status : Online ✅";
                 resolve(serverStatus);
             }
