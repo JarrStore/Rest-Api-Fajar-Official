@@ -18,20 +18,20 @@ async function tiktokStalk(username) {
         const stats = userDetail.userInfo?.stats;
 
         const metadata = {
-    userInfo: {
-        id: userInfo?.id || null,
-        username: userInfo?.uniqueId?.replace(/\n/g, '') || null,
-        nama: userInfo?.nickname?.replace(/\n/g, '') || null,
-        avatar: userInfo?.avatarLarger || null,
-        bio: userInfo?.signature?.replace(/\n/g, '') || null,
-        verifikasi: userInfo?.verified || false,
-        totalfollowers: stats?.followerCount || 0,
-        totalmengikuti: stats?.followingCount || 0,
-        totaldisukai: stats?.heart || 0,
-        totalvideo: stats?.videoCount || 0,
-        totalteman: stats?.friendCount || 0,
-    }
-};
+            userInfo: {
+                id: userInfo?.id || null,
+                username: userInfo?.uniqueId || null,
+                nama: userInfo?.nickname || null,
+                avatar: userInfo?.avatarLarger || null,
+                bio: userInfo?.signature || null,
+                verifikasi: userInfo?.verified || false,
+                totalfollowers: stats?.followerCount || 0,
+                totalmengikuti: stats?.followingCount || 0,
+                totaldisukai: stats?.heart || 0,
+                totalvideo: stats?.videoCount || 0,
+                totalteman: stats?.friendCount || 0,
+            }
+        };
 
         return metadata;
     } catch (error) {
