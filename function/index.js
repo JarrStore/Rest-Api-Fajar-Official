@@ -1,4 +1,4 @@
 module.exports = {
   getServerStatus: require('./scraper/samp'),
-  terabox: require('./scraper/terabox')
+  teraboxdl: require('./scraper/terabox')
 }
