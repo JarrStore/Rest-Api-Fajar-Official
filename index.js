@@ -6,6 +6,7 @@ const fs = require('fs');
 const ptz = require('./function/index') 
 const axios = require('axios')
 const isUrl = require("is-url")
+const terabox = require('./function/scraper/terabox')
 
 var app = express();
 app.enable("trust proxy");
@@ -273,7 +274,7 @@ app.get("/api/downloader/terabox", async (req, res) => {
   }
 
   try {
-    const files = await ptz.download(url);
+    const files = await terabox.download(url);
 
     if (files.length === 0) {
       return res.status(404).json({ success: false, error: "File tidak ditemukan" });
