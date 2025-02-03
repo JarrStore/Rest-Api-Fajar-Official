@@ -39,4 +39,4 @@ async function tiktokStalk(username) {
     }
 }
 
-module.exports = ttstalk;
+module.exports = tiktokStalk;
