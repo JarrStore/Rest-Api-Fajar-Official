@@ -137,6 +137,38 @@ app.get('/api/smartcontract', async (req, res) => {
   }
 });
 
+app.get('/api/downloader/capcut', async (req, res) => {
+    const { url } = req.query; // Extract URL from query parameter
+
+    // Check if the URL is provided
+    if (!url) {
+        return res.status(400).send('❌ URL is required. Example: /api/downloader/capcut?url=[CapCut URL]');
+    }
+
+    res.send('Tunggu sebentar...');
+
+    try {
+        const result = await ptz.capcutdl(url); // Call the scraper function
+
+        if (!result) {
+            return res.status(404).send('❌ Gagal mendapatkan data. Pastikan URL yang dimasukkan benar.');
+        }
+
+        const cpt = `*乂 C A P C U T - D O W N L O A D E R*\n\n   ◦ Title : ${result.title}\n   ◦ Date : ${result.date}\n   ◦ Pengguna : ${result.pengguna}\n   ◦ Likes : ${result.likes}\n   ◦ Author : ${result.author.name}`;
+        
+        // Send video URL and information back to the client
+        return res.json({
+            message: cpt,
+            videoUrl: result.videoUrl,
+            posterUrl: result.posterUrl,
+            thumbnail: result.posterUrl
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send('Terjadi kesalahan saat mengambil data.');
+    }
+});
+
 // Endpoint untuk blackboxAIChat
 app.get('/api/blackboxAIChat', async (req, res) => {
   try {
