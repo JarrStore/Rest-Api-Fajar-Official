@@ -19,16 +19,17 @@ const terabox = {
           'origin': 'https://terabox.hnn.workers.dev',
           'sec-fetch-dest': 'empty',
           'sec-fetch-mode': 'cors',
-          'sec-fetch-site': 'same-origin',
-          'cookie': 'your-cookie-value-here', // Include any necessary cookies
-          'x-forwarded-for': 'your-ip-address', // Set your IP address
-          'connection': 'keep-alive'
+          'sec-fetch-site': 'same-origin'
         }
       };
 
       const response = await axios.request(config);
       return response.data;
     } catch (error) {
+      if (error.response) {
+        console.error('Error Response:', error.response.data);
+        console.error('Status:', error.response.status);
+      }
       throw new Error(`Metadata fetch failed: ${error.message}`);
     }
   },
@@ -54,10 +55,7 @@ const terabox = {
           'origin': 'https://terabox.hnn.workers.dev',
           'sec-fetch-dest': 'empty',
           'sec-fetch-mode': 'cors',
-          'sec-fetch-site': 'same-origin',
-          'cookie': 'your-cookie-value-here', // Include any necessary cookies
-          'x-forwarded-for': 'your-ip-address', // Set your IP address
-          'connection': 'keep-alive'
+          'sec-fetch-site': 'same-origin'
         },
         data: data
       };
@@ -65,6 +63,10 @@ const terabox = {
       const response = await axios.request(config);
       return response.data.downloadLink;
     } catch (error) {
+      if (error.response) {
+        console.error('Error Response:', error.response.data);
+        console.error('Status:', error.response.status);
+      }
       throw new Error(`Get URL failed: ${error.message}`);
     }
   },
