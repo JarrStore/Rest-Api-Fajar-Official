@@ -266,8 +266,8 @@ app.get("/api/translate", async (req, res) => {
   }
 });
 
-app.get("/api/downloader/terabox", async (req, res) => {
-  const { url } = req.query;
+app.get("/api/terabox", async (req, res) => {
+  const url = req.query.url;
 
   if (!url) {
     return res.status(400).json({ error: "Parameter URL diperlukan" });
@@ -275,25 +275,7 @@ app.get("/api/downloader/terabox", async (req, res) => {
 
   try {
     const files = await terabox.download(url);
-
-    if (files.length === 0) {
-      return res.status(404).json({ success: false, error: "File tidak ditemukan" });
-    }
-
-    // Jika hanya satu file, langsung redirect ke link download
-    if (files.length === 1) {
-      return res.redirect(files[0].downloadUrl);
-    }
-
-    // Jika lebih dari satu file, kirim daftar link download
-    res.json({
-      success: true,
-      files: files.map(file => ({
-        filename: file.filename,
-        size: file.size,
-        downloadUrl: file.downloadUrl,
-      })),
-    });
+    res.json({ success: true, files });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
