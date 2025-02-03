@@ -14,20 +14,20 @@ async function getServerStatus(ip, port) {
                 console.error("Error detail:", error); // Lihat apakah ada detail error yang berguna
                 reject("Terjadi kesalahan saat menghubungi server.");
             } else {
-                const serverStatus = `
-IP Server : ${options.host}:${options.port}
-Nama Server : ${response.hostname}
-Pemain Online : ${response.online}
-Max Pemain : ${response.maxplayers}
-GameMode : ${response.gamemode}
-Map : ${response.mapname}
-Version : ${response.rules.version}
-Weather : ${response.rules.weather}
-Url : ${response.rules.weburl}
-Time : ${response.rules.worldtime}
-Player : ${response.players}
-Status : Online ✅
-`;
+                const serverStatus = [
+    "IP Server : ", options.host, ":", options.port, "\n",
+    "Nama Server : ", response.hostname, "\n",
+    "Pemain Online : ", response.online, "\n",
+    "Max Pemain : ", response.maxplayers, "\n",
+    "GameMode : ", response.gamemode, "\n",
+    "Map : ", response.mapname, "\n",
+    "Version : ", response.rules.version, "\n",
+    "Weather : ", response.rules.weather, "\n",
+    "Url : ", response.rules.weburl, "\n",
+    "Time : ", response.rules.worldtime, "\n",
+    "Player : ", response.players, "\n",
+    "Status : Online ✅"
+].join("");
                 resolve(serverStatus);
             }
         });
