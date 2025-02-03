@@ -277,7 +277,7 @@ app.get("/api/downloader/terabox", async (req, res) => {
   }
 
   try {
-    const files = await ptz.terabox(url);
+    const files = await ptz.teraboxdl(url);
     res.json({ success: true, files });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
