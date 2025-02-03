@@ -186,6 +186,27 @@ app.get('/api/islam/niatisya', async (req, res) => {
         })
 });
 
+app.get('/api/googlesearch', async (req, res) => {
+  const text = req.query.text;
+
+  if (!text) {
+    return res.status(400).json({ success: false, message: 'Query text is required' });
+  }
+
+  try {
+    // Call the Google scraper function
+    const searchResults = await ptz.Google(text);
+
+    if (searchResults.success) {
+      return res.json(searchResults);
+    } else {
+      return res.status(500).json({ success: false, message: searchResults.error });
+    }
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+});
+
 app.get('/api/islam/niatashar', async (req, res) => {
     
     fetch(encodeURI(`https://raw.githubusercontent.com/zeeoneofficial/My-SQL-Results/master/data/NiatIsya.json`))
