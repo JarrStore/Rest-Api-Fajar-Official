@@ -5,7 +5,7 @@ async function getServerStatus(ip, port) {
         const options = {
             host: ip,
             port: parseInt(port, 10),
-            timeout: 3000
+            timeout: 1000
         };
 
         // Tes query sederhana tanpa retry atau delay tambahan
@@ -25,7 +25,6 @@ async function getServerStatus(ip, port) {
   "Weather :" + response.rules.weather + " " +
   "Url :" + response.rules.weburl + " " +
   "Time :" + response.rules.worldtime + " " +
-  "Status: Online ✅ " +
   "Player: " + response.players.map(player => player.name).join(", ");
                 resolve(serverStatus);
             }
