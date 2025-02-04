@@ -5,7 +5,7 @@ async function getServerStatus(ip, port) {
         const options = {
             host: ip,
             port: parseInt(port, 10),
-            timeout: 1000
+            timeout: 3000
         };
 
                   let serverIP = response.options.serverip;
