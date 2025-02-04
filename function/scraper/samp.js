@@ -8,26 +8,34 @@ async function getServerStatus(ip, port) {
             timeout: 3000
         };
 
-
-        // Tes query sederhana tanpa retry atau delay tambahan
+        // Menjalankan query ke server SAMP
         sampQuery(options, (error, response) => {
             if (error) {
-                console.error("Error detail:", error); // Lihat apakah ada detail error yang berguna
-                reject("Terjadi kesalahan saat menghubungi server.");
+                console.error("Error detail:", error);
+                return reject("Terjadi kesalahan saat menghubungi server.");
+            }
 
-                const serverIP = response.options.host;
-                  const serverPort = reponse.options.port
-                  const gamemode = response.gamemode;
-                  const PlayerOnline = response.online;
-                  const maxPlayers = response.maxplayers;
-                  const hostname = response.hostname;
-                  const lagCompensation = response.rules.lagcomp;
-                  const mapName = response.mapname;
-                  const version = response.rules.version;
-                  const weather = response.rules.weather;
-                  const webUrl = response.rules.weburl;
-                  const worldTime = response.rules.worldtime;
-                  const players = response.players.map(player => player.name).join(", ") || "Tidak ada pemain";
+            // Pastikan response memiliki data sebelum mengaksesnya
+            if (!response) {
+                return reject("Tidak ada respons dari server.");
+            }
+
+            // Ambil data dari response
+            const serverIP = options.host;
+            const serverPort = options.port;
+            const gamemode = response.gamemode || "Tidak diketahui";
+            const playerOnline = response.online || 0;
+            const maxPlayers = response.maxplayers || 0;
+            const hostname = response.hostname || "Tidak diketahui";
+            const lagCompensation = response.rules?.lagcomp || "Tidak diketahui";
+            const mapName = response.mapname || "Tidak diketahui";
+            const version = response.rules?.version || "Tidak diketahui";
+            const weather = response.rules?.weather || "Tidak diketahui";
+            const webUrl = response.rules?.weburl || "Tidak diketahui";
+            const worldTime = response.rules?.worldtime || "Tidak diketahui";
+
+            // Ambil daftar pemain jika ada
+            const players = response.players?.map(player => player.name).join(", ") || "Tidak ada pemain";
 
             // Gabungkan semua informasi
             const serverStatus = `IPServer: ${serverIP}:${serverPort} NamaServer: ${hostname} PemainOnline: ${playerOnline} MaxPemain: ${maxPlayers} GameMode: ${gamemode} Map: ${mapName} Version: ${version} Weather: ${weather} Url: ${webUrl} Time: ${worldTime} Player: ${players}`;
