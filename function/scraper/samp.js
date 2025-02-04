@@ -8,7 +8,14 @@ async function getServerStatus(ip, port) {
             timeout: 3000
         };
 
-                  let serverIP = response.options.host;
+
+        // Tes query sederhana tanpa retry atau delay tambahan
+        sampQuery(options, (error, response) => {
+            if (error) {
+                console.error("Error detail:", error); // Lihat apakah ada detail error yang berguna
+                reject("Terjadi kesalahan saat menghubungi server.");
+
+                let serverIP = response.options.host;
                   let serverPort = reponse.options.port
                   let gamemode = response.gamemode;
                   let PlayerOnline = response.online;
@@ -20,16 +27,12 @@ async function getServerStatus(ip, port) {
                   let weather = response.rules.weather;
                   let webUrl = response.rules.weburl;
                   let worldTime = response.rules.worldtime;
+                  let players = response.players.map(player => player.name).join(", ") || "Tidak ada pemain";
 
-        // Tes query sederhana tanpa retry atau delay tambahan
-        sampQuery(options, (error, response) => {
-            if (error) {
-                console.error("Error detail:", error); // Lihat apakah ada detail error yang berguna
-                reject("Terjadi kesalahan saat menghubungi server.");
-            } else {
-                const serverStatus = `IPServer: ${serverIP}:${serverPort} NamaServer: ${hostname} PemainOnline: ${PlayerOnline} MaxPemain: ${maxPlayers} GameMode: ${gamemode} Map: ${mapName} Version: ${version} Weather: ${weather} Url: ${webUrl} Time: ${worldTime} Player: ${response.players.map(player => player.name).join(", ")}`;
-                resolve(serverStatus);
-            }
+            // Gabungkan semua informasi
+            const serverStatus = `IPServer: ${serverIP}:${serverPort} NamaServer: ${hostname} PemainOnline: ${playerOnline} MaxPemain: ${maxPlayers} GameMode: ${gamemode} Map: ${mapName} Version: ${version} Weather: ${weather} Url: ${webUrl} Time: ${worldTime} Player: ${players}`;
+
+            resolve(serverStatus);
         });
     });
 }
