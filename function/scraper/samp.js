@@ -8,27 +8,26 @@ async function getServerStatus(ip, port) {
             timeout: 1000
         };
 
+                  let serverIP = response.options.serverip;
+                  let serverPort = reponse.options.port
+                  let gamemode = response.gamemode;
+                  let PlayerOnline = response.online;
+                  let maxPlayers = response.maxplayers;
+                  let hostname = response.hostname;
+                  let lagCompensation = response.rules.lagcomp;
+                  let mapName = response.mapname;
+                  let version = response.rules.version;
+                  let weather = response.rules.weather;
+                  let webUrl = response.rules.weburl;
+                  let worldTime = response.rules.worldtime;
+
         // Tes query sederhana tanpa retry atau delay tambahan
         sampQuery(options, (error, response) => {
             if (error) {
                 console.error("Error detail:", error); // Lihat apakah ada detail error yang berguna
                 reject("Terjadi kesalahan saat menghubungi server.");
             } else {
-                const serverData = {
-    ip_server: `${options.host || "N/A"}:${options.port || "N/A"}`,
-    nama_server: response.hostname || "N/A",
-    pemain_online: response.online || 0,
-    max_pemain: response.maxplayers || 0,
-    game_mode: response.gamemode || "N/A",
-    map: response.mapname || "N/A",
-    version: response.rules.version || "N/A",
-    weather: response.rules.weather || "N/A",
-    url: response.rules.weburl || "N/A",
-    world_time: response.rules.worldtime || "N/A",
-    player_list: response.players.length > 0 
-        ? response.players.map(player => player.name) 
-        : ["Tidak ada pemain online"]
-};
+                const serverStatus = `IPServer: ${serverIP}:${serverPort} NamaServer: ${hostname} PemainOnline: ${PlayerOnline} MaxPemain: ${maxPlayers} GameMode: ${gamemode} Map: ${mapName} Version: ${version} Weather: ${weather} Url: ${webUrl} Time: ${worldTime} Player: ${response.players.map(player => player.name).join(", ")}`;
                 resolve(serverStatus);
             }
         });
