@@ -61,3 +61,5 @@ async function instanav(url) {
         return null;
     }
 }
+
+module.exports = instanav;
