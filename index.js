@@ -343,6 +343,36 @@ app.get('/api/search/ttstalk', async (req, res) => {
     }
 });
 
+app.get('/api/downloader/igdl', async (req, res) => {
+    try {
+        const url = req.query.url;
+
+        if (!url) {
+            return res.status(400).json({ error: "Parameter 'url' diperlukan!" });
+        }
+
+        if (!url.match(/instagram\.com\/(reel|p|tv)/gi)) {
+            return res.status(400).json({ error: "URL harus berupa link Instagram Reel, Post, atau TV!" });
+        }
+
+        const result = await ptz.instanav(url);
+
+        if (!result || result.downloadUrls[0] === 'Download URL not found') {
+            return res.status(404).json({ error: "Media tidak ditemukan!" });
+        }
+
+        res.json({
+            title: result.title,
+            thumbnail: result.thumbnail,
+            downloadUrls: result.downloadUrls
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Terjadi kesalahan dalam memproses permintaan." });
+    }
+});
+
 app.get("/api/gpt", async (req, res) => {
 const text = req.query.text;
 
