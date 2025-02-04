@@ -14,7 +14,21 @@ async function getServerStatus(ip, port) {
                 console.error("Error detail:", error); // Lihat apakah ada detail error yang berguna
                 reject("Terjadi kesalahan saat menghubungi server.");
             } else {
-                const serverStatus = `IPServer: ${options.host}:${options.port} NamaServer: ${response.hostname} PemainOnline: ${response.online} MaxPemain: ${response.maxplayers} GameMode: ${response.gamemode} Map: ${response.mapname} Version: ${response.rules.version} Weather: ${response.rules.weather} Url: ${response.rules.weburl} Time: ${response.rules.worldtime} Player: ${response.players.map(player => player.name).join(", ")}`;
+                const serverData = {
+    ip_server: `${options.host || "N/A"}:${options.port || "N/A"}`,
+    nama_server: response.hostname || "N/A",
+    pemain_online: response.online || 0,
+    max_pemain: response.maxplayers || 0,
+    game_mode: response.gamemode || "N/A",
+    map: response.mapname || "N/A",
+    version: response.rules.version || "N/A",
+    weather: response.rules.weather || "N/A",
+    url: response.rules.weburl || "N/A",
+    world_time: response.rules.worldtime || "N/A",
+    player_list: response.players.length > 0 
+        ? response.players.map(player => player.name) 
+        : ["Tidak ada pemain online"]
+};
                 resolve(serverStatus);
             }
         });
