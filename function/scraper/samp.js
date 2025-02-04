@@ -25,8 +25,8 @@ async function getServerStatus(ip, port) {
   Weather: ${response.rules.weather} 
   Url: ${response.rules.weburl} 
   Time: ${response.rules.worldtime} 
-  Player: ${response.players.map(player => player.name).join(", ")}
-`;
+  Player: ${response.players.map(player => player.name).join(" ")} 
+`.replace(/\n/g, '').trim();
                 resolve(serverStatus);
             }
         });
