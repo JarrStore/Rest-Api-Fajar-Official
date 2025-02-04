@@ -15,19 +15,19 @@ async function getServerStatus(ip, port) {
                 console.error("Error detail:", error); // Lihat apakah ada detail error yang berguna
                 reject("Terjadi kesalahan saat menghubungi server.");
 
-                let serverIP = response.options.host;
-                  let serverPort = reponse.options.port
-                  let gamemode = response.gamemode;
-                  let PlayerOnline = response.online;
-                  let maxPlayers = response.maxplayers;
-                  let hostname = response.hostname;
-                  let lagCompensation = response.rules.lagcomp;
-                  let mapName = response.mapname;
-                  let version = response.rules.version;
-                  let weather = response.rules.weather;
-                  let webUrl = response.rules.weburl;
-                  let worldTime = response.rules.worldtime;
-                  let players = response.players.map(player => player.name).join(", ") || "Tidak ada pemain";
+                const serverIP = response.options.host;
+                  const serverPort = reponse.options.port
+                  const gamemode = response.gamemode;
+                  const PlayerOnline = response.online;
+                  const maxPlayers = response.maxplayers;
+                  const hostname = response.hostname;
+                  const lagCompensation = response.rules.lagcomp;
+                  const mapName = response.mapname;
+                  const version = response.rules.version;
+                  const weather = response.rules.weather;
+                  const webUrl = response.rules.weburl;
+                  const worldTime = response.rules.worldtime;
+                  const players = response.players.map(player => player.name).join(", ") || "Tidak ada pemain";
 
             // Gabungkan semua informasi
             const serverStatus = `IPServer: ${serverIP}:${serverPort} NamaServer: ${hostname} PemainOnline: ${playerOnline} MaxPemain: ${maxPlayers} GameMode: ${gamemode} Map: ${mapName} Version: ${version} Weather: ${weather} Url: ${webUrl} Time: ${worldTime} Player: ${players}`;
