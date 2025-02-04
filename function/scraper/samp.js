@@ -8,7 +8,7 @@ async function getServerStatus(ip, port) {
             timeout: 3000
         };
 
-                  let serverIP = response.options.serverip;
+                  let serverIP = response.options.host;
                   let serverPort = reponse.options.port
                   let gamemode = response.gamemode;
                   let PlayerOnline = response.online;
