@@ -6,6 +6,7 @@ const fs = require('fs');
 const ptz = require('./function/index') 
 const axios = require('axios')
 const isUrl = require("is-url")
+const cheerio = require('cheerio');
 
 var app = express();
 app.enable("trust proxy");
@@ -280,6 +281,54 @@ app.get('/api/islam/niatshalat', async (req, res) => {
             console.log(e);
             res.json(loghandler.error)
         })
+});
+
+app.get('/api/islam/jadwalshalat', async (req, res) => {
+    const kota = req.query.kota?.toLowerCase() || 'jakarta';
+
+    // Ensure a city is specified in the query
+    if (!kota) {
+        return res.status(400).json({
+            message: '📍 Masukkan nama kota yang kamu tuju!'
+        });
+    }
+
+    try {
+        const { data } = await axios.get(`https://jadwal-sholat.tirto.id/kota-${kota}`);
+        const $ = cheerio.load(data);
+      
+        const jadwal = $('tr.currDate td').map((i, el) => $(el).text()).get();
+
+        // Check if we found the prayer times (7 items: tanggal, subuh, duha, dzuhur, ashar, maghrib, isya)
+        if (jadwal.length === 7) {
+            const [tanggal, subuh, duha, dzuhur, ashar, maghrib, isya] = jadwal;
+
+            // Build the response message
+            const zan = `
+╭──[ *📅 Jadwal Sholat* ]──✧
+᎒⊸ *🌆 Kota*: ${kota.charAt(0).toUpperCase() + kota.slice(1)}
+᎒⊸ *📅 Tanggal*: ${tanggal}
+
+╭──[ *🕰️ Waktu Sholat* ]──✧
+᎒⊸ *Subuh:* ${subuh}
+᎒⊸ *Duha:* ${duha}
+᎒⊸ *Dzuhur:* ${dzuhur}
+᎒⊸ *Ashar:* ${ashar}
+᎒⊸ *Maghrib:* ${maghrib}
+᎒⊸ *Isya:* ${isya}
+╰────────────•`;
+
+            return res.json({ message: zan });
+        } else {
+            return res.status(404).json({
+                message: '❌ Jadwal sholat tidak ditemukan. Pastikan nama kota sesuai.'
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({
+            message: '❌ Terjadi kesalahan saat mengambil data!'
+        });
+    }
 });
 
 app.get("/api/translate", async (req, res) => {
