@@ -43,8 +43,8 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname,  'index.html'));
 });
 
-app.get('/wl', (req, res) => {
-  res.sendFile(path.join(__dirname, 'view', 'whitelist.html'));
+app.get('/home', (req, res) => {
+  res.sendFile(path.join(__dirname, 'whitelist.html'));
 });
 
 app.get('/api/samp', async (req, res) => {
