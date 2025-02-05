@@ -16,6 +16,17 @@
         .container {
             padding: 50px 20px;
         }
+        .containerr {
+            width: 80%;
+            max-width: 600px;
+            height: 50px;
+            position: relative;
+            overflow: hidden;
+            background-color: #fff;
+            border: 2px solid #000;
+            display: flex;
+            align-items: center;
+        }
         h1 {
             font-size: 28px;
             color: #ffeb3b;
@@ -61,11 +72,11 @@
             transform: scale(1.1);
         }
         .running-text {
+            display: inline-block;
             white-space: nowrap;
-            overflow: hidden;
-            box-sizing: border-box;
-            width: 100%;
-            animation: marquee 10s linear infinite;
+            font-size: 18px;
+            color: #333;
+            animation: marquee 20s linear infinite;
         }
 
         @keyframes marquee {
@@ -81,9 +92,10 @@
     <div class="container">
         <h1>Welcome to Rest API Fajar Official</h1>
 
+        <div class="containerr">
         <div class="running-text">
-        <p>Selamat Datang di Rest API Fajar Official. Rest API ini simple, no ribet, tanpa API key, tanpa limit, dan tanpa login. Semoga kalian suka!</p>
-    </div>
+            <p>Selamat Datang di Rest API Fajar Official. Rest API ini simple, no ribet, tanpa API key, tanpa limit, dan tanpa login. Semoga kalian suka!</p>
+        </div>
         
         <div class="section">
             <h2 class="highlight">Fajar Official</h2>
