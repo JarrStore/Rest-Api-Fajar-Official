@@ -60,6 +60,20 @@
             background: #ffc107;
             transform: scale(1.1);
         }
+        .running-text {
+            white-space: nowrap;
+            overflow: hidden;
+            box-sizing: border-box;
+            width: 100%;
+            animation: marquee 10s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
     </style>
 </head>
 <body>
@@ -67,8 +81,10 @@
     <div class="container">
         <h1>Welcome to Rest API Fajar Official</h1>
 
+        <div class="running-text">
         <p>Selamat Datang di Rest API Fajar Official. Rest API ini simple, no ribet, tanpa API key, tanpa limit, dan tanpa login. Semoga kalian suka!</p>
-
+    </div>
+        
         <div class="section">
             <h2 class="highlight">Fajar Official</h2>
             <h3>Rest API Simple NO Ribet</h3>
