@@ -284,7 +284,7 @@ app.get('/api/islam/niatshalat', async (req, res) => {
 });
 
 app.get('/api/islam/jadwalshalat', async (req, res) => {
-    const kota = req.query.kota?.toLowerCase() || 'jakarta';
+    const kota = req.query.kota;
 
     // Ensure a city is specified in the query
     if (!kota) {
