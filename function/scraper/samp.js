@@ -1,4 +1,4 @@
-const sampQuery = require('samp-query');
+const SampQuery = require('samp-query');
 
 async function getServerStatus(ip, port) {
     return new Promise((resolve, reject) => {
@@ -9,7 +9,7 @@ async function getServerStatus(ip, port) {
         };
 
         // Menjalankan query ke server SAMP
-        sampQuery(options, (error, response) => {
+        SampQuery(options, (error, response) => {
             if (error) {
                 console.error("Error detail:", error);
                 return reject("Terjadi kesalahan saat menghubungi server.");
@@ -38,7 +38,19 @@ async function getServerStatus(ip, port) {
             const players = response.players?.map(player => player.name).join(", ") || "Tidak ada pemain";
 
             // Gabungkan semua informasi
-            const serverStatus = `IPServer: ${serverIP}:${serverPort} NamaServer: ${hostname} PemainOnline: ${playerOnline} MaxPemain: ${maxPlayers} GameMode: ${gamemode} Map: ${mapName} Version: ${version} Weather: ${weather} Url: ${webUrl} Time: ${worldTime} Player: ${players}`;
+            const serverStatus = `
+                IPServer: ${serverIP}:${serverPort}
+                NamaServer: ${hostname}
+                PemainOnline: ${playerOnline}
+                MaxPemain: ${maxPlayers}
+                GameMode: ${gamemode}
+                Map: ${mapName}
+                Version: ${version}
+                Weather: ${weather}
+                Url: ${webUrl}
+                Time: ${worldTime}
+                Player: ${players}
+            `;
 
             resolve(serverStatus);
         });
