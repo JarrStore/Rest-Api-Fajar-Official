@@ -360,7 +360,7 @@ app.get('/api/pin/', async (req, res) => {
     }
 
     try {
-        const anutrest = await pinterest(text); // Dapatkan hasil pencarian dari Pinterest
+        const anutrest = await ptz.pinterest(text); // Dapatkan hasil pencarian dari Pinterest
         let selectedImages = anutrest.slice(0, 5); // Ambil 5 gambar pertama
 
         // Format respons JSON
