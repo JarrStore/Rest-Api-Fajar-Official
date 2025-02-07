@@ -370,25 +370,6 @@ app.get('/api/downloader/igdl', async (req, res) => {
     }
 });
 
-app.get('/search/pinterest', async (req, res, next) => {
-    const text = req.query.text;
-    if (!text) return res.json({
-        status: false,
-        creator: `${creator}`,
-        message: "masukan parameter query"
-    })
-    scr.pinterest(text)
-        .then(data => {
-            var result = data;
-            res.json({
-                result
-            })
-        })
-        .catch(e => {
-            console.log(e);
-            res.json(loghandler.error)
-        })
-})
 
 app.get("/api/gpt", async (req, res) => {
 const text = req.query.text;
