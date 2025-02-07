@@ -8,12 +8,6 @@ const axios = require('axios')
 const isUrl = require("is-url")
 const cheerio = require('cheerio');
 
-const {
-  screenshotV1, 
-  screenshotV2,
-  screenshotV3 
-} = require('getscreenshot.js')
-
 var app = express();
 app.enable("trust proxy");
 app.set("json spaces", 2);
@@ -72,23 +66,6 @@ app.get('/api/samp', async (req, res) => {
         console.error("Error handling request:", error);
         res.status(500).json({ error: "Terjadi kesalahan saat menghubungi server." });
     }
-});
-
-app.get('/api/ragbot', async (req, res) => {
-  try {
-    const message = req.query.message;
-    if (!message) {
-      return res.status(400).json({ error: 'Parameter "message" tidak ditemukan' });
-    }
-    const response = await ptz.ragBot(message);
-    res.status(200).json({
-      status: 200,
-      creator: "Fajar Official",
-      data: { response }
-    });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
 });
 
 app.get('/api/islam/niatmagrib', async (req, res, next) => {
@@ -374,40 +351,6 @@ app.get('/api/downloader/igdl', async (req, res) => {
         res.status(500).json({ error: "Terjadi kesalahan dalam memproses permintaan." });
     }
 });
-
-app.get("/api/ssweb", async (req, res) => {
-    try {
-        const url = req.query.url;
-        if (!url) {
-            return res.status(400).json({ error: "Masukkan URL, contoh: ?url=https://example.com" });
-        }
-
-        // Fungsi validasi URL
-        const isValidUrl = (str) => {
-            try {
-                new URL(str);
-                return true;
-            } catch (e) {
-                return false;
-            }
-        };
-
-        if (!isValidUrl(url)) {
-            return res.status(400).json({ error: "URL tidak valid!" });
-        }
-
-        // Ambil screenshot menggunakan screenshotV2
-        const screenshotBuffer = await screenshotV2(url);
-
-        // Kirim sebagai respons gambar PNG
-        res.setHeader("Content-Type", "image/png");
-        res.send(screenshotBuffer);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Terjadi kesalahan dalam mengambil screenshot" });
-    }
-});
-
 
 app.get("/api/gpt", async (req, res) => {
 const text = req.query.text;
