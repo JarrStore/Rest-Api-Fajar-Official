@@ -18,6 +18,7 @@
     "node-fetch": "^2.6.1",
     "express": "^4.19.2",
     "query": "^0.2.0",
+    "getscreenshot.js": "^4.0.0",
     "emoji-api": "^3.0.1",
     "tiktokdl": "^0.0.5",
     "ssl-express-www": "^3.2.1"
