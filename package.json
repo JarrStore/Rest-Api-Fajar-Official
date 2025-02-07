@@ -19,7 +19,7 @@
     "express": "^4.19.2",
     "query": "^0.2.0",
     "emoji-api": "^3.0.1",
-    "g-i-s": "2.1.7",
+    "g-i-s": "^2.1.7",
     "tiktokdl": "^0.0.5",
     "ssl-express-www": "^3.2.1"
   }
