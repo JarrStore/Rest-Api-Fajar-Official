@@ -102,41 +102,6 @@ app.get('/api/islam/niatmagrib', async (req, res, next) => {
             res.json(loghandler.error)
         })
 });
-// Endpoint untuk degreeGuru
-app.get('/api/degreeguru', async (req, res) => {
-  try {
-    const { message }= req.query;
-    if (!message) {
-      return res.status(400).json({ error: 'Parameter "message" tidak ditemukan' });
-    }
-    const response = await ptz.degreeGuru(message);
-    res.status(200).json({
-      status: 200,
-      creator: "Fajar Official",
-      data: { response }
-    });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// Endpoint untuk smartContract
-app.get('/api/smartcontract', async (req, res) => {
-  try {
-    const message = req.query.message;
-    if (!message) {
-      return res.status(400).json({ error: 'Parameter "message" tidak ditemukan' });
-    }
-    const response = await ptz.smartContract(message);
-    res.status(200).json({
-      status: 200,
-      creator: "Fajar Official",
-      data: { response }
-    });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
 
 app.get('/api/downloader/capcut', async (req, res) => {
     const { url } = req.query; // Extract URL from query parameter
@@ -166,24 +131,6 @@ app.get('/api/downloader/capcut', async (req, res) => {
         console.error(error);
         return res.status(500).send('Terjadi kesalahan saat mengambil data.');
     }
-});
-
-// Endpoint untuk blackboxAIChat
-app.get('/api/blackboxAIChat', async (req, res) => {
-  try {
-    const message = req.query.message;
-    if (!message) {
-      return res.status(400).json({ error: 'Parameter "message" tidak ditemukan' });
-    }
-    const response = await ptz.blackboxAIChat(message);
-    res.status(200).json({
-      status: 200,
-      creator: "Fajar Official",
-      data: { response }
-    });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
 });
 
 app.get("/api/tiktok", async (req, res) => {
