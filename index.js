@@ -370,8 +370,8 @@ app.get('/api/downloader/igdl', async (req, res) => {
     }
 });
 
-router.get('/search/pinterest', async (req, res, next) => {
-    var text = req.query.query
+app.get('/search/pinterest', async (req, res, next) => {
+    const text = req.query.text;
     if (!text) return res.json({
         status: false,
         creator: `${creator}`,
