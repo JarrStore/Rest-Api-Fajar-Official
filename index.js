@@ -7,6 +7,7 @@ const ptz = require('./function/index')
 const axios = require('axios')
 const isUrl = require("is-url")
 const cheerio = require('cheerio');
+const scr = require('@bochilteam/scraper')
 
 var app = express();
 app.enable("trust proxy");
@@ -368,6 +369,26 @@ app.get('/api/downloader/igdl', async (req, res) => {
         res.status(500).json({ error: "Terjadi kesalahan dalam memproses permintaan." });
     }
 });
+
+router.get('/search/pinterest', async (req, res, next) => {
+    var text = req.query.query
+    if (!text) return res.json({
+        status: false,
+        creator: `${creator}`,
+        message: "masukan parameter query"
+    })
+    scr.pinterest(text)
+        .then(data => {
+            var result = data;
+            res.json({
+                result
+            })
+        })
+        .catch(e => {
+            console.log(e);
+            res.json(loghandler.error)
+        })
+})
 
 app.get("/api/gpt", async (req, res) => {
 const text = req.query.text;
