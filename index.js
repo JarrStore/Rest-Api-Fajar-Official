@@ -352,6 +352,33 @@ app.get('/api/downloader/igdl', async (req, res) => {
     }
 });
 
+app.get('/api/pin/', async (req, res) => {
+    const text = req.query.text;
+
+    if (!text) {
+        return res.status(400).json({ error: "Enter Query" });
+    }
+
+    try {
+        const anutrest = await pinterest(text); // Dapatkan hasil pencarian dari Pinterest
+        let selectedImages = anutrest.slice(0, 5); // Ambil 5 gambar pertama
+
+        // Format respons JSON
+        let messages = selectedImages.map(url => ({
+            image: url,
+            caption: `⭔ Media Url: ${url}`
+        }));
+
+        res.json({
+            success: true,
+            message: '✅ 5 Gambar Pinterest berhasil dikirim!',
+            data: messages
+        });
+    } catch (error) {
+        res.status(500).json({ error: "Terjadi kesalahan", details: error.message });
+    }
+});
+
 app.get("/api/gpt", async (req, res) => {
 const text = req.query.text;
 
