@@ -8,6 +8,12 @@ const axios = require('axios')
 const isUrl = require("is-url")
 const cheerio = require('cheerio');
 
+const {
+  screenshotV1, 
+  screenshotV2,
+  screenshotV3 
+} = require('getscreenshot.js')
+
 var app = express();
 app.enable("trust proxy");
 app.set("json spaces", 2);
@@ -366,6 +372,39 @@ app.get('/api/downloader/igdl', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Terjadi kesalahan dalam memproses permintaan." });
+    }
+});
+
+app.get("/api/ssweb", async (req, res) => {
+    try {
+        const url = req.query.url;
+        if (!url) {
+            return res.status(400).json({ error: "Masukkan URL, contoh: ?url=https://example.com" });
+        }
+
+        // Fungsi validasi URL
+        const isValidUrl = (str) => {
+            try {
+                new URL(str);
+                return true;
+            } catch (e) {
+                return false;
+            }
+        };
+
+        if (!isValidUrl(url)) {
+            return res.status(400).json({ error: "URL tidak valid!" });
+        }
+
+        // Ambil screenshot menggunakan screenshotV2
+        const screenshotBuffer = await screenshotV2(url);
+
+        // Kirim sebagai respons gambar PNG
+        res.setHeader("Content-Type", "image/png");
+        res.send(screenshotBuffer);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Terjadi kesalahan dalam mengambil screenshot" });
     }
 });
 
