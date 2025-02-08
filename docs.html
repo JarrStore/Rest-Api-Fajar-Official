@@ -65,12 +65,6 @@
             font-weight: bold;
         }
 
-        .method {
-            font-weight: bold;
-            margin: 10px 0;
-            color: #1dbf73;
-        }
-
         .endpoint {
             background: #282828;
             padding: 10px;
@@ -78,11 +72,6 @@
             font-size: 0.9rem;
             color: #d3d3d3;
             word-break: break-all;
-        }
-
-        .params {
-            margin-top: 10px;
-            color: #d3d3d3;
         }
 
         .buttons {
@@ -98,22 +87,12 @@
             border-radius: 5px;
             font-size: 0.9rem;
             font-weight: bold;
-        }
-
-        .execute {
-            background-color: #6a5acd;
-            color: #fff;
-        }
-
-        .request {
-            background-color: #777;
-            color: #fff;
+            cursor: pointer;
         }
 
         .response {
             background-color: #1dbf73;
             color: #fff;
-            cursor: pointer;
         }
 
         .json-box {
@@ -149,23 +128,16 @@
             <p>Explore our API methods for GET & POST requests.</p>
         </div>
 
+        <!-- SERVER SAMP -->
         <div class="section">
             <h2>SERVER SAMP <span class="status">Active</span></h2>
             <p class="endpoint">Endpoint: /api/samp?ip=&port=</p>
             
             <div class="buttons">
-                <a class="response" id="responseBtn">Response</a>
+                <a class="response" data-target="jsonSamp">Response</a>
             </div>
 
-            <div class="section">
-            <h2>TIKTOK DOWNLOADER <span class="status">Active</span></h2>
-            <p class="endpoint">Endpoint: /api/tiktok?url=</p>
-            
-            <div class="buttons">
-                <a class="response" id="responseBtn">Response</a>
-            </div>
-
-            <div class="json-box" id="jsonBox">
+            <div class="json-box" id="jsonSamp">
                 <h3>JSON Example</h3>
                 <pre>
 {
@@ -173,7 +145,7 @@
   "results": {
     "IPServer": "44***",
     "PortServer": 5**,
-    "NamaServer": "Lexurium  | 3x exp up!",
+    "NamaServer": "Lexurium | 3x exp up!",
     "PemainOnline": 7,
     "MaxPemain": 50,
     "GameMode": "LRP V1.0.9",
@@ -185,29 +157,65 @@
     "Players": [
       "Randy_Xcrup",
       "Satou_Ryota",
-      "Val_Pashmore",
-      "Warno_Escobar",
-      "Febry_Wijaya",
-      "Zull_Ricardo",
-      "Xyahh_Grack"
+      "Val_Pashmore"
     ]
   }
 }
                 </pre>
-                <button class="close-btn" id="closeBtn">Close</button>
+                <button class="close-btn">Close</button>
+            </div>
+        </div>
+
+        <!-- TIKTOK DOWNLOADER -->
+        <div class="section">
+            <h2>TIKTOK DOWNLOADER <span class="status">Active</span></h2>
+            <p class="endpoint">Endpoint: /api/tiktok?url=</p>
+            
+            <div class="buttons">
+                <a class="response" data-target="jsonTiktok">Response</a>
+            </div>
+
+            <div class="json-box" id="jsonTiktok">
+                <h3>JSON Example</h3>
+                <pre>
+{
+  "status": "success",
+  "video_url": "https://tiktok.com/example-video",
+  "author": "TikTokUser123",
+  "likes": 1500,
+  "shares": 200,
+  "comments": 300
+}
+                </pre>
+                <button class="close-btn">Close</button>
             </div>
         </div>
     </div>
 
     <script>
-        document.getElementById("responseBtn").addEventListener("click", function() {
-            document.getElementById("jsonBox").style.display = "block";
-            document.getElementById("requestBtn").style.display = "none";
+        // Ambil semua tombol "Response"
+        document.querySelectorAll(".response").forEach(button => {
+            button.addEventListener("click", function() {
+                let targetId = this.getAttribute("data-target");
+                let targetBox = document.getElementById(targetId);
+
+                // Sembunyikan semua JSON box sebelum menampilkan yang baru
+                document.querySelectorAll(".json-box").forEach(box => {
+                    box.style.display = "none";
+                });
+
+                // Tampilkan JSON yang sesuai
+                if (targetBox) {
+                    targetBox.style.display = "block";
+                }
+            });
         });
 
-        document.getElementById("closeBtn").addEventListener("click", function() {
-            document.getElementById("jsonBox").style.display = "none";
-            document.getElementById("requestBtn").style.display = "inline-block";
+        // Fungsi untuk menutup JSON box
+        document.querySelectorAll(".close-btn").forEach(button => {
+            button.addEventListener("click", function() {
+                this.parentElement.style.display = "none";
+            });
         });
     </script>
 
