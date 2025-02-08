@@ -57,11 +57,15 @@ app.get('/api/samp', async (req, res) => {
     }
 
     try {
-        const serverStatus = await ptz.getServerStatus(ip, port);
+        const serverStatus = await getServerStatus(ip, port);
+
         if (serverStatus) {
-            res.json(serverStatus);
+            res.json({
+                status: true,
+                results: serverStatus
+            });
         } else {
-            res.status(503).json({ message: "Server sedang offline/MT." });
+            res.status(503).json({ status: false, message: "Server sedang offline/MT." });
         }
     } catch (error) {
         console.error("Error handling request:", error);
