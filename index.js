@@ -62,7 +62,20 @@ app.get('/api/samp', async (req, res) => {
         if (serverStatus) {
             res.json({
                 status: true,
-                results: serverStatus
+                results: {
+                    IPServer: serverStatus.ip,
+                    PortServer: serverStatus.port,
+                    NamaServer: serverStatus.hostname,
+                    PemainOnline: serverStatus.players_online,
+                    MaxPemain: serverStatus.max_players,
+                    GameMode: serverStatus.gamemode,
+                    Map: serverStatus.map_name,
+                    Version: serverStatus.version,
+                    Weather: serverStatus.weather,
+                    Url: serverStatus.web_url,
+                    Time: serverStatus.world_time,
+                    Players: serverStatus.players
+                }
             });
         } else {
             res.status(503).json({ status: false, message: "Server sedang offline/MT." });
