@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple API - Skyzopedia</title>
+
+    <!-- External CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&family=Poppins:wght@100..900&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0f172a;
+            height: 100vh;
+        }
+
+        .mobile-menu {
+            transform: translateX(-100%);
+            background-color: #0f172a;
+            font-family: 'Poppins', serif;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        .navbar {
+            background-color: #0f172a;
+        }
+
+        .hamburger {
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .hamburger-line {
+            display: block;
+            width: 24px;
+            height: 2px;
+            margin: 5px auto;
+            background-color: white;
+            transition: all 0.5s ease-in-out;
+        }
+
+        .hamburger.active .hamburger-line:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .hamburger.active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active .hamburger-line:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        header {
+            margin: 5rem 1.5rem 3rem;
+            padding: 10px 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        header p,
+        .main .item .title-api,
+        .main .item .method,
+        .main .item .endpoint {
+            color: white;
+        }
+
+        main {
+            margin: 2.2rem 40px;
+        }
+
+        main h1 {
+            font-size: 25px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            background: linear-gradient(90deg, #ff8a00, #e52e71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .item {
+            display: flex;
+            height: 40px;
+            margin: 5px auto;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(147, 197, 253, 0.1);
+            border-radius: 20px;
+        }
+
+        .item .method {
+            margin-left: 20px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .item .title-api {
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .item .endpoint {
+            margin-right: 20px;
+            font-size: 25px;
+        }
+
+        .item .endpoint a:active {
+            background: linear-gradient(90deg, #ff8a00, #e52e71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        footer {
+            padding: 20px;
+            margin-top: 2.5rem;
+            background-color: #0f172a;
+            text-align: center;
+            color: white;
+        }
+    </style>
+</head>
+
+<body class="text-gray-200">
+
+    <!-- Navbar -->
+    <nav class="navbar fixed top-0 left-0 right-0 z-50 px-4 py-2">
+        <div class="container mx-auto flex justify-between items-center">
+            <p class="text-2xl font-bold bg-gradient-to-r from-yellow-400 via-orange-400 to-pink-500 bg-clip-text text-transparent">
+                Skyzopedia API
+            </p>
+            <!-- Hamburger Menu -->
+            <div class="hamburger lg:hidden" id="hamburger">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="animate__animated animate__fadeInUp">
+        <h1>Skyzopedia API</h1>
+        <p>Skyzopedia API menyediakan berbagai macam endpoint untuk bot WhatsApp, dirancang agar mudah digunakan.</p>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu fixed top-0 left-0 h-full w-60 bg-gray-800 z-40 p-6 lg:hidden">
+        <div class="flex flex-col space-y-6 mt-16">
+            <a class="hover:text-blue-400 text-white transition-colors" href="/">Home</a>
+            <a href="https://wa.me/6285624297893" class="hover:text-blue-400 text-white transition-colors">Contact</a>
+            <a href="https://youtube.com/@skyzopedia" class="hover:text-blue-400 text-white transition-colors">YouTube</a>
+            <a href="https://whatsapp.com/channel/0029VaYoztA47XeAhs447Y1s" class="hover:text-blue-400 text-white transition-colors">Information</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="animate__animated animate__fadeInUp">
+        <h1>Orderkuota Gateway</h1>
+        <div class="item">
+            <p class="method">GET</p>
+            <p class="title-api">Create Payment</p>
+            <p class="endpoint">
+                <a target="_blank" class="fas fa-arrow-circle-right" href="https://api.skyzopedia.us.kg/api/orkut/createpayment?apikey=&amount=&codeqr="></a>
+            </p>
+        </div>
+        <div class="item">
+            <p class="method">GET</p>
+            <p class="title-api">Cek Status</p>
+            <p class="endpoint">
+                <a target="_blank" class="fas fa-arrow-circle-right" href="https://api.skyzopedia.us.kg/api/orkut/cekstatus?apikey=&merchant=&keyorkut="></a>
+            </p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Skyzopedia API. All rights reserved.</p>
+    </footer>
+
+</body>
+
+</html>
