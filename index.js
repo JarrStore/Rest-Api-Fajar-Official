@@ -432,19 +432,28 @@ app.get('/api/stalker/npm', async (req, res) => {
 
   if (!text) {
     return res.status(400).json({
-      message: `⚠️ Gunakan dengan cara: /api/stalker/npm?package=*nama package npm*\n\n🤔 *Contohnya:*\n\n/api/stalker/npm?package=axios`
+      results: {
+        message: `⚠️ Gunakan dengan contoh: ?package=axios`
+      }
     });
   }
 
   try {
-    const npmInfo = await ptz.npmstalk(text);
+    const npmInfo = await npmstalk(text);
     return res.json({
-      message: `📦 *Package:* ${npmInfo.name}\n🔢 *Versi Terbaru:* ${npmInfo.versionLatest}\n📅 *Waktu Terbit:* ${npmInfo.publishTime}\n🔧 *Dependencies Terbaru:* ${npmInfo.latestDependencies}`
+      results: {
+        Package: npmInfo.name,
+        "Versi Terbaru": npmInfo.versionLatest,
+        "Waktu Terbit": npmInfo.publishTime,
+        "Dependencies Terbaru": npmInfo.latestDependencies
+      }
     });
   } catch (err) {
     console.error(err);
     return res.status(500).json({
-      message: `❌ Ada masalah waktu ambil data dari NPM, Kak! Coba lagi nanti ya 🥺`
+      results: {
+        message: `❌ Ada masalah waktu ambil data dari NPM, Kak! Coba lagi nanti ya 🥺`
+      }
     });
   }
 });
