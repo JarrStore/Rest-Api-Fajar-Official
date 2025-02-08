@@ -113,7 +113,32 @@
         .response {
             background-color: #1dbf73;
             color: #fff;
+            cursor: pointer;
         }
+
+        .json-box {
+            display: none;
+            background-color: #282828;
+            color: #d3d3d3;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            position: relative;
+        }
+
+        .close-btn {
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body>
@@ -133,24 +158,48 @@
             
             <div class="buttons">
                 <a href="#" class="execute">Execute</a>
-                <a href="#" class="request">Request</a>
-                <a href="#" class="response">Response</a>
+                <a href="#" class="request" id="requestBtn">Request</a>
+                <a class="response" id="responseBtn">Response</a>
             </div>
-        </div>
 
-        <div class="section">
-            <h2>Create Transaction <span class="status">Active</span></h2>
-            <p class="method">Method: GET, POST</p>
-            <p class="endpoint">Endpoint: /api/h2h/create-transaction</p>
-            <p class="params">Parameters (Required): api_key, amount, transaction_id</p>
-
-            <div class="buttons">
-                <a href="#" class="execute">Execute</a>
-                <a href="#" class="request">Request</a>
-                <a href="#" class="response">Response</a>
+            <div class="json-box" id="jsonBox">
+                <h3>JSON Example</h3>
+                <pre>
+{
+    "status": "success",
+    "code": 200,
+    "message": "Deposit request success",
+    "data": {
+        "id": "forest-api",
+        "reff_id": "forest-api",
+        "nominal": 500,
+        "additional": 0,
+        "fee": 10,
+        "get_balance": 490,
+        "qr_image_string": "forest-api",
+        "qr_image_url": "https://forestapi.web.id",
+        "status": "pending",
+        "created_at": "2025-01-24 18:22",
+        "expired_at": "2025-01-24 19:22"
+    }
+}
+                </pre>
+                <button class="close-btn" id="closeBtn">Close</button>
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById("responseBtn").addEventListener("click", function() {
+            document.getElementById("jsonBox").style.display = "block";
+            document.getElementById("requestBtn").style.display = "none";
+        });
+
+        document.getElementById("closeBtn").addEventListener("click", function() {
+            document.getElementById("jsonBox").style.display = "none";
+            document.getElementById("requestBtn").style.display = "inline-block";
+        });
+    </script>
 
 </body>
 </html>
