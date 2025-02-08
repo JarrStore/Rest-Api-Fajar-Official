@@ -7,6 +7,7 @@ const ptz = require('./function/index')
 const axios = require('axios')
 const isUrl = require("is-url")
 const cheerio = require('cheerio');
+const toRupiah = require('./function/scrape/toruipah')
 
 var app = express();
 app.enable("trust proxy");
