@@ -437,7 +437,7 @@ app.get('/api/stalker/npm', async (req, res) => {
   }
 
   try {
-    const npmInfo = await npmstalk(text);
+    const npmInfo = await ptz.npmstalk(text);
     return res.json({
       message: `📦 *Package:* ${npmInfo.name}\n🔢 *Versi Terbaru:* ${npmInfo.versionLatest}\n📅 *Waktu Terbit:* ${npmInfo.publishTime}\n🔧 *Dependencies Terbaru:* ${npmInfo.latestDependencies}`
     });
