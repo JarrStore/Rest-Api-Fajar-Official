@@ -380,6 +380,53 @@ app.get('/api/pin/', async (req, res) => {
     }
 });
 
+app.get('/api/search/tiktoksearch', async (req, res) => {
+  const text = req.query.text;  // The search query will be passed in the URL as a query parameter
+  
+  if (!text) {
+    return res.status(400).json({
+      error: "Bad Request",
+      message: "Please provide a search query. Example: /api/search/tiktoksearch?text=christy+jkt48"
+    });
+  }
+
+  try {
+    const searchResults = await ptz.tiktokSearchVideo(text);
+    let result = [];
+    let no = 1;
+
+    for (let video of searchResults.videos) {
+      let videoData = {
+        no: no++,
+        title: video.title,
+        username: video.author.unique_id,
+        nickname: video.author.nickname,
+        duration: toRupiah(video.duration) + ' detik',
+        like: toRupiah(video.digg_count),
+        comment: toRupiah(video.comment_count),
+        share: toRupiah(video.share_count),
+        url: `https://www.tiktok.com/@${video.author.unique_id}/video/${video.video_id}`,
+        video_url: `https://tikwm.com${video.play}`
+      };
+      
+      result.push(videoData);
+    }
+
+    // Responding with the JSON data
+    res.json({
+      searchQuery: text,
+      totalResults: result.length,
+      results: result
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      error: "Internal Server Error",
+      message: `Something went wrong: ${err.message}`
+    });
+  }
+});
+
 app.get("/api/gpt", async (req, res) => {
 const text = req.query.text;
 
