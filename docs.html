@@ -1,187 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simple API - Skyzopedia</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H2H API Documentation</title>
 
-  <!-- CSS Libraries -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-  <!-- Custom Styles -->
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&display=swap');
-
-    * { -webkit-tap-highlight-color: transparent; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #0f172a;
-      height: 100vh;
-    }
-
-    .mobile-menu {
-      transform: translateX(-100%);
-      background-color: #0f172a;
-      font-family: 'Poppins', serif;
-      transition: transform 0.5s ease-in-out;
-    }
-    .mobile-menu.active {
-      transform: translateX(0);
-    }
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     
-    .navbar, .mobile-menu { background-color: #0f172a; }
-    .hamburger { cursor: pointer; padding: 10px; }
-    .hamburger-line {
-      display: block;
-      width: 24px;
-      height: 2px;
-      margin: 5px auto;
-      background-color: white;
-      transition: all 0.5s ease-in-out;
-    }
-    .hamburger.active .hamburger-line:nth-child(1) {
-      transform: translateY(7px) rotate(45deg);
-    }
-    .hamburger.active .hamburger-line:nth-child(2) { opacity: 0; }
-    .hamburger.active .hamburger-line:nth-child(3) {
-      transform: translateY(-7px) rotate(-45deg);
-    }
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            padding: 20px;
+        }
 
-    header {
-      margin: 5rem 1.5rem 3rem;
-      padding: 10px 20px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      border-radius: 10px;
-    }
-    header h1 {
-      font-size: 24px;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-    header p, main .item .method, main .item .title-api, main .item .endpoint {
-      color: white;
-    }
-    header p {
-      line-height: 18px;
-      font-size: 15px;
-      font-family: "Poppins", serif;
-    }
-    
-    main {
-      margin: 2.2rem 40px;
-    }
-    main h1 {
-      background: linear-gradient(90deg, #ff8a00, #e52e71);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-size: 25px;
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
-    
-    .item {
-      display: flex;
-      height: 40px;
-      margin: 5px auto;
-      justify-content: space-between;
-      align-items: center;
-      background-color: rgba(147, 197, 253, 0.1);
-      border-radius: 20px;
-    }
-    .item .method {
-      margin-left: 20px;
-      font-weight: bold;
-      font-size: 18px;
-    }
-    .item .title-api {
-      font-weight: bold;
-      font-size: 15px;
-    }
-    .item .endpoint {
-      margin-right: 20px;
-      font-size: 25px;
-    }
-    
-    footer {
-      padding: 20px;
-      margin-top: 2.5rem;
-      background-color: #0f172a;
-      text-align: center;
-      color: white;
-    }
-  </style>
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .header {
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: #1dbf73;
+        }
+
+        .header p {
+            font-size: 1rem;
+            color: #d3d3d3;
+        }
+
+        .section {
+            background-color: #1e1e1e;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 255, 127, 0.3);
+        }
+
+        .section h2 {
+            font-size: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status {
+            background-color: #1dbf73;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .method {
+            font-weight: bold;
+            margin: 10px 0;
+            color: #1dbf73;
+        }
+
+        .endpoint {
+            background: #282828;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            color: #d3d3d3;
+            word-break: break-all;
+        }
+
+        .params {
+            margin-top: 10px;
+            color: #d3d3d3;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: flex-start;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .buttons a {
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .execute {
+            background-color: #6a5acd;
+            color: #fff;
+        }
+
+        .request {
+            background-color: #777;
+            color: #fff;
+        }
+
+        .response {
+            background-color: #1dbf73;
+            color: #fff;
+        }
+    </style>
 </head>
-<body class="text-gray-200">
+<body>
 
-  <!-- Navbar -->
-  <nav class="navbar fixed top-0 left-0 right-0 z-50 px-4 py-2">
-    <div class="container mx-auto flex justify-between items-center">
-      <p class="text-2xl font-bold bg-gradient-to-r from-yellow-400 via-orange-400 to-pink-500 bg-clip-text text-transparent">
-        Skyzopedia API
-      </p>
-      <div class="hamburger lg:hidden" id="hamburger">
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-      </div>
+    <div class="container">
+        <div class="header">
+            <h1>H2H API Documentation</h1>
+            <p>Explore our API methods for GET & POST requests.</p>
+        </div>
+
+        <div class="section">
+            <h2>Product List <span class="status">Active</span></h2>
+            <p class="method">Method: GET, POST</p>
+            <p class="endpoint">Endpoint: /api/h2h/price-list/all</p>
+            <p class="params">Parameters (Optional): filter_category, filter_provider, filter_name, filter_type, filter_code, filter_status</p>
+            <p class="params">Parameters (Required): api_key</p>
+            
+            <div class="buttons">
+                <a href="#" class="execute">Execute</a>
+                <a href="#" class="request">Request</a>
+                <a href="#" class="response">Response</a>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Create Transaction <span class="status">Active</span></h2>
+            <p class="method">Method: GET, POST</p>
+            <p class="endpoint">Endpoint: /api/h2h/create-transaction</p>
+            <p class="params">Parameters (Required): api_key, amount, transaction_id</p>
+
+            <div class="buttons">
+                <a href="#" class="execute">Execute</a>
+                <a href="#" class="request">Request</a>
+                <a href="#" class="response">Response</a>
+            </div>
+        </div>
     </div>
-  </nav>
-
-  <!-- Header -->
-  <header class="animate__animated animate__fadeInUp">
-    <h1 class="text-3xl font-bold bg-gradient-to-r from-yellow-400 via-orange-400 to-pink-500 bg-clip-text text-transparent">
-      Skyzopedia API
-    </h1>
-    <p>Skyzopedia API menyediakan berbagai macam endpoint fitur untuk Bot WhatsApp, disederhanakan agar mudah digunakan.</p>
-  </header>
-
-  <!-- Mobile Menu -->
-  <div class="mobile-menu fixed top-0 left-0 h-full w-60 bg-gray-800 z-40 p-6 lg:hidden">
-    <div class="flex flex-col space-y-6 mt-16">
-      <a class="hover:text-blue-400 text-white transition-colors" href="/">Home</a>
-      <a class="hover:text-blue-400 text-white transition-colors" href="https://wa.me/6285624297893">Contact</a>
-      <a class="hover:text-blue-400 text-white transition-colors" href="https://youtube.com/@skyzopedia">YouTube</a>
-      <a class="hover:text-blue-400 text-white transition-colors" href="https://whatsapp.com/channel/0029VaYoztA47XeAhs447Y1s">Information</a>
-    </div>
-  </div>
-
-  <!-- Main Content -->
-  <main class="animate__animated animate__fadeInUp">
-    <h1>Orderkuota Gateway</h1>
-    <div class="item">
-      <p class="method">GET</p>
-      <p class="title-api">Create Payment</p>
-      <p class="endpoint">
-        <a target="_blank" class="fas fa-arrow-circle-right" href="https://api.skyzopedia.us.kg/api/orkut/createpayment?apikey=&amount=&codeqr="></a>
-      </p>
-    </div>
-    <div class="item">
-      <p class="method">GET</p>
-      <p class="title-api">Cek Status</p>
-      <p class="endpoint">
-        <a target="_blank" class="fas fa-arrow-circle-right" href="https://api.skyzopedia.us.kg/api/orkut/cekstatus?apikey=&merchant=&keyorkut="></a>
-      </p>
-    </div>
-
-    <h1>Downloader</h1>
-    <div class="item">
-      <p class="method">GET</p>
-      <p class="title-api">TikTok</p>
-      <p class="endpoint">
-        <a target="_blank" class="fas fa-arrow-circle-right" href="https://api.skyzopedia.us.kg/api/download/tiktokdl?url="></a>
-      </p>
-    </div>
-  </main>
-
-  <!-- Footer -->
-  <footer>© 2024 Skyzopedia API. All rights reserved.</footer>
 
 </body>
 </html>
