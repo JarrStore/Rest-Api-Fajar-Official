@@ -45,8 +45,8 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname,  'index.html'));
 });
 
-app.get('/home', (req, res) => {
-  res.sendFile(path.join(__dirname, 'home.html'));
+app.get('/docs', (req, res) => {
+  res.sendFile(path.join(__dirname, 'docs.html'));
 });
 
 app.get('/api/samp', async (req, res) => {
