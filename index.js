@@ -442,10 +442,10 @@ app.get('/api/stalker/npm', async (req, res) => {
     const npmInfo = await ptz.npmstalk(text);
     return res.json({
       results: {
-        "Package": npmInfo.name,
-        "VersiTerbaru": npmInfo.versionLatest,
-        "WaktuTerbit": npmInfo.publishTime,
-        "DependenciesTerbaru": npmInfo.latestDependencies
+        Package: npmInfo.name,
+        VersiTerbaru: npmInfo.versionLatest,
+        WaktuTerbit: npmInfo.publishTime,
+        DependenciesTerbaru: npmInfo.latestDependencies
       }
     });
   } catch (err) {
