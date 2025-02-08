@@ -8,3 +8,5 @@ function toRupiah(angka) {
   }
   return '' + saldo.split('').reverse().join('');
 }
+
+module.exports = toRupiah;
