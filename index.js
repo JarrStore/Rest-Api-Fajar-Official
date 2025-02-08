@@ -57,7 +57,7 @@ app.get('/api/samp', async (req, res) => {
     }
 
     try {
-        const serverStatus = await getServerStatus(ip, port);
+        const serverStatus = await ptz.getServerStatus(ip, port);
 
         if (serverStatus) {
             res.json({
