@@ -442,7 +442,7 @@ app.get('/api/stalker/npm', async (req, res) => {
     const npmInfo = await ptz.npmstalk(text);
     res.json({
       status: true,
-      creator 'Fajar Official',
+      creator: 'Fajar Official',
       results: {
         Package: npmInfo.name,
         VersiTerbaru: npmInfo.versionLatest,
