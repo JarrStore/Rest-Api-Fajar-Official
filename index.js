@@ -443,9 +443,9 @@ app.get('/api/stalker/npm', async (req, res) => {
     return res.json({
       results: {
         Package: npmInfo.name,
-        "Versi Terbaru": npmInfo.versionLatest,
-        "Waktu Terbit": npmInfo.publishTime,
-        "Dependencies Terbaru": npmInfo.latestDependencies
+        "VersiTerbaru": npmInfo.versionLatest,
+        "WaktuTerbit": npmInfo.publishTime,
+        "DependenciesTerbaru": npmInfo.latestDependencies
       }
     });
   } catch (err) {
