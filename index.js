@@ -534,19 +534,20 @@ app.get('/api/downloader/mediafire', async (req, res) => {
     return res.json({ status: false, message: 'URL is required' });
   }
 
+  // Check if the URL is from mediafire
   if (!url.includes('mediafire.com')) {
     return res.json({ status: false, message: 'Invalid MediaFire URL' });
   }
 
   try {
-    const result = await ptz.mediafire(url);
+    const result = await ptz.mediafire(url); // scraping MediaFire data
     if (!result.link) {
       return res.json({ status: false, message: 'Error! Result Not Found' });
     }
     
     res.json({
       status: true,
-      creator: `${creator}`,
+      creator: `${creator}`, // Replace with your name or a creator's name
       result: {
         title: result.judul,
         upload_date: result.upload_date,
@@ -556,7 +557,8 @@ app.get('/api/downloader/mediafire', async (req, res) => {
       }
     });
   } catch (error) {
-    res.json({ status: false, message: 'Error occurred while fetching data' });
+    console.error('Error fetching data from MediaFire:', error);  // Log error details
+    res.json({ status: false, message: `Error occurred: ${error.message}` });
   }
 });
 
