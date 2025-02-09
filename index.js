@@ -519,9 +519,6 @@ res.status(500).send("Internal Server Error");
 });
 
 app.use('/users', userrouter)
-app.use((req, res, next) => {
-  res.status(404).send("Halaman tidak ditemukan");
-});
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
