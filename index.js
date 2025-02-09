@@ -490,7 +490,7 @@ app.get('/api/game/minecraft', async (req, res) => {
     const port = parseInt(req.query.port) || 25565;
 
     if (!host) {
-        return res.status(400).json({ status: false, message: 'Parameter host diperlukan' });
+        return res.status(400).json({ status: false, message: 'Parameter host Dan Port diperlukan' });
     }
 
     try {
