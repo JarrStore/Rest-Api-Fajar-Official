@@ -1,6 +1,6 @@
 require("../settings");
 const express = require('express');
-const router = express.Router();
+const app = express();
 const passport = require('passport'),
    jwt = require('jsonwebtoken');
 
@@ -19,13 +19,13 @@ const {
 } = require('../lib/auth');
 const sendEmail = require('../lib/email');
 
-router.get('/login', notAuthenticated, (req, res) => {
+app.get('/login', notAuthenticated, (req, res) => {
    res.render('login', {
       layout: 'login'
    });
 });
 
-router.post('/login', async (req, res, next) => {
+app.post('/login', async (req, res, next) => {
    passport.authenticate('local', {
       successRedirect: '/docs',
       failureRedirect: '/users/login',
@@ -38,7 +38,7 @@ router.post('/login', async (req, res, next) => {
    })(req, res, next);
 });
 //Verifikasi email
-router.get('/activation/', async (req, res) => {
+app.get('/activation/', async (req, res) => {
    let id = req.query.id;
    if (!id) {
       req.flash('error_msg', "Invalid activation token")
@@ -78,7 +78,7 @@ router.get('/signup', notAuthenticated, (req, res) => {
    });
 });
 
-router.post('/signup', async (req, res) => {
+app.post('/signup', async (req, res) => {
    try {
       let {
          email,
@@ -124,10 +124,10 @@ router.post('/signup', async (req, res) => {
    }
 })
 
-router.get('/logout', (req, res) => {
+app.get('/logout', (req, res) => {
    req.logout();
    req.flash('success_msg', 'logout success');
    res.redirect('/users/login');
 });
 
-module.exports = router;
+module.exports = app;
