@@ -697,8 +697,6 @@ app.use((err, req, res, next) => {
   res.status(500).send('Ada kesalahan pada server');
 });
 
-connectMongoDb();
-
 app.listen(port, () => {
   console.log(`Server berjalan di http://localhost:${port}`);
 });
