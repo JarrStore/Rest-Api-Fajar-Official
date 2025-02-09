@@ -11,6 +11,7 @@ const util = require('minecraft-server-util');
 const toRupiah = require('./function/scraper/torupiah')
 const malScraper = require('mal-scraper');
 const cekKey = require('./MongoDB/function')
+const { User } = require('./MongoDB/model');
 
 const { connectMongoDb } = require('./MongoDB/connect');
 connectMongoDb();
@@ -57,7 +58,7 @@ app.get('/docs', (req, res) => {
 });
 
 app.get('/addapikey', async (req, res) => {
-    const { add } = req.query;
+    const add = req.query.add;
 
     if (!add) {
         return res.status(400).json({ success: false, message: "API key is required" });
