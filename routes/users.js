@@ -72,7 +72,7 @@ app.get('/activation/', async (req, res) => {
       }
    });
 });
-router.get('/signup', notAuthenticated, (req, res) => {
+app.get('/signup', notAuthenticated, (req, res) => {
    res.render('signup', {
       layout: 'signup'
    });
