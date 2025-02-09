@@ -9,6 +9,9 @@ const isUrl = require("is-url")
 const cheerio = require('cheerio');
 const toRupiah = require('./function/scraper/torupiah')
 
+const { connectMongoDb } = require('./MongoDB/mongodb');
+connectMongoDb();
+
 var app = express();
 app.enable("trust proxy");
 app.set("json spaces", 2);
