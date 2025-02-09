@@ -9,12 +9,6 @@ const isUrl = require("is-url")
 const cheerio = require('cheerio');
 const toRupiah = require('./function/scraper/torupiah')
 
-const { isAuthenticated } = require('./lib/auth');
-const { connectMongoDb } = require('./MongoDB/mongodb');
-connectMongoDb();
-
-const appget = require('./routes/users');
-
 var app = express();
 app.enable("trust proxy");
 app.set("json spaces", 2);
@@ -518,7 +512,6 @@ res.status(500).send("Internal Server Error");
 }
 });
 
-app.use('/users', appget)
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
