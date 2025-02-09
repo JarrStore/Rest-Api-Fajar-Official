@@ -5,5 +5,6 @@ module.exports = {
   instanav: require('./scraper/igdl'),
   pinterest: require('./scraper/pinterest'),
   tiktokSearchVideo: require('./scraper/tiktoksearch'),
-  npmstalk: require('./scraper/npmstalk')
+  npmstalk: require('./scraper/npmstalk'),
+  PlayStore: require('./scraper/PlayStore')
 }
