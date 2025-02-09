@@ -11,7 +11,7 @@ const util = require('minecraft-server-util');
 const toRupiah = require('./function/scraper/torupiah')
 const { mediafiredl } = require('@bochilteam/scraper');
 
-const creator = global.creator;
+var creator = global.creator;
 
 var app = express();
 app.enable("trust proxy");
@@ -550,7 +550,7 @@ app.get('/api/downloader/mediafire', async (req, res) => {
 
         res.json({
             status: true,
-            creator: creator,
+            creator: `${creator}`,
             result: {
                 filename: result.filename,
                 size: result.filesizeH,
