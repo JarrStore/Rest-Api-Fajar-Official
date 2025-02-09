@@ -10,7 +10,6 @@ const cheerio = require('cheerio');
 const util = require('minecraft-server-util');
 const toRupiah = require('./function/scraper/torupiah')
 const malScraper = require('mal-scraper');
-const cekKey = require('./MongoDB/function')
 const { User } = require('./MongoDB/model');
 
 const { connectMongoDb } = require('./MongoDB/connect');
@@ -101,7 +100,7 @@ app.get('/api/addapikey', async (req, res) => {
         return res.status(400).json({ success: false, message: "API key is required" });
     }
 
-    let existingKey = await cekKey(add);
+    let existingKey = await ptz.cekKey(add);
     if (existingKey) {
         return res.status(400).json({ success: false, message: "API key already exists" });
     }
