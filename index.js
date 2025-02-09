@@ -57,7 +57,7 @@ app.get('/docs', (req, res) => {
   res.sendFile(path.join(__dirname, 'docs.html'));
 });
 
-app.get('/addapikey', async (req, res) => {
+app.get('/api/addapikey', async (req, res) => {
     const add = req.query.add;
 
     if (!add) {
