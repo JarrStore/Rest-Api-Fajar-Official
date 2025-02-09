@@ -287,7 +287,7 @@ app.get("/api/translate", async (req, res) => {
     const response = await axios.get(`https://api.siputzx.my.id/api/tools/translate`, {
       params: { text: text, source: "auto", target: "id" }
     });
-    res.json({ status: true, creator: "Fajar Official", result: response.data.translatedText });
+    res.json({ creator: "Fajar Official", result: response.data.translatedText });
   } catch {
     res.status(500).json({ error: "An error occurred while processing the translation." });
   }
