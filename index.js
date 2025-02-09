@@ -13,7 +13,7 @@ const { isAuthenticated } = require('./lib/auth');
 const { connectMongoDb } = require('./MongoDB/mongodb');
 connectMongoDb();
 
-userrouter = require('./routes/users');
+const appget = require('./routes/users');
 
 var app = express();
 app.enable("trust proxy");
@@ -47,7 +47,7 @@ app.get('/stats', (req, res) => {
   res.json(stats);
 });
 
-app.get('/', isAuthenticated, (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname,  'index.html'));
 });
 
@@ -55,7 +55,7 @@ app.get('/docs', (req, res) => {
   res.sendFile(path.join(__dirname, 'docs.html'));
 });
 
-app.get('/api/samp', async (req, res) => {
+app.get('/api/samp', isAuthenticated, async (req, res) => {
     const { ip, port } = req.query;
 
     if (!ip || !port) {
@@ -518,7 +518,7 @@ res.status(500).send("Internal Server Error");
 }
 });
 
-app.use('/users', userrouter)
+app.use('/users', appget)
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
