@@ -538,7 +538,7 @@ app.get('/api/search/playstore', async (req, res) => {
     }
 
     try {
-        const hasil = await PlayStore(nama);
+        const hasil = await ptz.PlayStore(nama);
         if (!hasil || hasil.length === 0 || hasil.message) {
             return res.json({
                 status: false,
