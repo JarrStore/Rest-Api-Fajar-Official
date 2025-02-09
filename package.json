@@ -21,6 +21,8 @@
     "emoji-api": "^3.0.1",
     "g-i-s": "^2.1.7",
     "tiktokdl": "^0.0.5",
+    "mongoose": "^5.13.5",
+    "mongodb": "^3.6.3",
     "ssl-express-www": "^3.2.1"
   }
 }
