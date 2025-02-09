@@ -13,6 +13,8 @@ const { isAuthenticated } = require('./lib/auth');
 const { connectMongoDb } = require('./MongoDB/mongodb');
 connectMongoDb();
 
+userrouter = require('./routes/users');
+
 var app = express();
 app.enable("trust proxy");
 app.set("json spaces", 2);
@@ -516,7 +518,7 @@ res.status(500).send("Internal Server Error");
 }
 });
 
-
+app.use('/users', userrouter)
 app.use((req, res, next) => {
   res.status(404).send("Halaman tidak ditemukan");
 });
