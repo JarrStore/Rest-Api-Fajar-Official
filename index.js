@@ -527,41 +527,6 @@ app.get('/api/game/minecraft', async (req, res) => {
     }
 });
 
-app.get('/api/downloader/mediafire', async (req, res) => {
-  const url = req.query.url; // get the URL from the query parameters
-
-  if (!url) {
-    return res.json({ status: false, message: 'URL is required' });
-  }
-
-  // Check if the URL is from mediafire
-  if (!url.includes('mediafire.com')) {
-    return res.json({ status: false, message: 'Invalid MediaFire URL' });
-  }
-
-  try {
-    const result = await ptz.mediafire(url); // scraping MediaFire data
-    if (!result.link) {
-      return res.json({ status: false, message: 'Error! Result Not Found' });
-    }
-    
-    res.json({
-      status: true,
-      creator: `${creator}`, // Replace with your name or a creator's name
-      result: {
-        title: result.judul,
-        upload_date: result.upload_date,
-        size: result.size,
-        mime: result.mime,
-        download_link: result.link
-      }
-    });
-  } catch (error) {
-    console.error('Error fetching data from MediaFire:', error);  // Log error details
-    res.json({ status: false, message: `Error occurred: ${error.message}` });
-  }
-});
-
 app.get("/api/gpt", async (req, res) => {
 const text = req.query.text;
 
