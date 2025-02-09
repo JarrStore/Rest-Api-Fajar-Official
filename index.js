@@ -527,6 +527,49 @@ app.get('/api/game/minecraft', async (req, res) => {
     }
 });
 
+app.get('/api/search/playstore', async (req, res) => {
+    const nama = req.query.nama;
+
+    if (!nama) {
+        return res.json({
+            status: false,
+            message: 'Nama pencarian tidak diberikan!'
+        });
+    }
+
+    try {
+        const hasil = await PlayStore(nama);
+        if (!hasil || hasil.length === 0 || hasil.message) {
+            return res.json({
+                status: false,
+                message: 'Tidak ditemukan hasil untuk pencarian tersebut.'
+            });
+        }
+
+        const result = hasil.slice(0, 3).map((item, i) => ({
+            rank: i + 1,
+            nama: item.nama,
+            developer: item.developer,
+            rating: item.rate,
+            link: item.link,
+            link_dev: item.link_dev,
+            img: item.img
+        }));
+
+        res.json({
+            status: true,
+            creator: `${creator}`,
+            result
+        });
+    } catch (error) {
+        console.error('Error:', error.message);
+        res.json({
+            status: false,
+            message: 'Terjadi kesalahan saat mengambil data dari Play Store.'
+        });
+    }
+});
+
 app.get("/api/gpt", async (req, res) => {
 const text = req.query.text;
 
