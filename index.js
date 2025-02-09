@@ -643,7 +643,7 @@ app.get('/api/addapikey', async (req, res) => {
     res.json({ success: true, message: "API key added successfully", apikey: add });
 });
 
-app.get('/api/game/tembakgambar', cekKey, async (req, res, next) => {
+app.get('/api/game/tembakgambar', async (req, res, next) => {
  ptz.tebakgambar().then((data) =>{   
   res.json({
 	status: true,
