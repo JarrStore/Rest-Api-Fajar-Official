@@ -8,31 +8,39 @@ async function mediafire(query) {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
       }
     })
-      .then(({ data }) => {
-        const $ = cheerio.load(data);
-        const judul = $('body > div.mf-dlr.page.ads-alternate > div.content > div.center > div > div.dl-btn-cont > div.dl-btn-labelWrap > div.promoDownloadName.notranslate > div').text().trim();
-        const size = $('body > div.mf-dlr.page.ads-alternate > div.content > div.center > div > div.dl-info > ul > li:nth-child(1) > span').text().trim();
-        const upload_date = $('body > div.mf-dlr.page.ads-alternate > div.content > div.center > div > div.dl-info > ul > li:nth-child(2) > span').text().trim();
-        const link = $('#downloadButton').attr('href');
+    .then(({ data, status }) => {
+      console.log('Response Status:', status); // Log response status
+      if (status !== 200) {
+        return reject(new Error('Failed to retrieve MediaFire page.'));
+      }
+      
+      console.log('Page data:', data); // Log the HTML content received
 
-        // Check for missing data
-        if (!judul || !size || !upload_date || !link) {
-          return reject(new Error('Missing data or incorrect structure'));
-        }
+      const $ = cheerio.load(data);
+      const judul = $('body > div.mf-dlr.page.ads-alternate > div.content > div.center > div > div.dl-btn-cont > div.dl-btn-labelWrap > div.promoDownloadName.notranslate > div').text().trim();
+      const size = $('body > div.mf-dlr.page.ads-alternate > div.content > div.center > div > div.dl-info > ul > li:nth-child(1) > span').text().trim();
+      const upload_date = $('body > div.mf-dlr.page.ads-alternate > div.content > div.center > div > div.dl-info > ul > li:nth-child(2) > span').text().trim();
+      const link = $('#downloadButton').attr('href');
 
-        const result = {
-          judul: judul,
-          upload_date: upload_date,
-          size: size,
-          mime: link.split('/')[5].split('.')[1],
-          link: link
-        };
-        resolve(result);
-      })
-      .catch(error => {
-        console.error('Error during scraping:', error);
-        reject(new Error('Failed to scrape MediaFire page'));
-      });
+      // Check if all necessary data is found
+      if (!judul || !size || !upload_date || !link) {
+        return reject(new Error('Missing data or incorrect structure'));
+      }
+
+      const result = {
+        judul: judul,
+        upload_date: upload_date,
+        size: size,
+        mime: link.split('/')[5].split('.')[1],
+        link: link
+      };
+
+      resolve(result);
+    })
+    .catch(error => {
+      console.error('Error fetching MediaFire page:', error.response ? error.response.data : error.message);
+      reject(new Error('Failed to scrape MediaFire page'));
+    });
   });
 }
 
