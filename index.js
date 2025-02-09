@@ -7,6 +7,7 @@ const ptz = require('./function/index')
 const axios = require('axios')
 const isUrl = require("is-url")
 const cheerio = require('cheerio');
+const util = require('minecraft-server-util');
 const toRupiah = require('./function/scraper/torupiah')
 
 var app = express();
@@ -482,6 +483,46 @@ app.get('/api/stalker/npm', async (req, res) => {
       }
     });
   }
+});
+
+app.get('/api/game/minecraft', async (req, res) => {
+    const host = req.query.host;
+    const port = parseInt(req.query.port) || 25565;
+
+    if (!host) {
+        return res.status(400).json({ status: false, message: 'Parameter host diperlukan' });
+    }
+
+    try {
+        const data = await util.status(host, port, { timeout: 5000 });
+
+        res.json({
+            status: true,
+            results: {
+                ip: host,
+                port: port,
+                ping: data.roundTripLatency,
+                motd: data.motd.clean,
+                online: data.players.online,
+                max: data.players.max,
+                version: data.version.name,
+                protocol: {
+                    version: data.version.protocol,
+                    name: data.version.name
+                },
+                players: data.players.sample || [],
+                software: data.software || "Unknown",
+                hostname: data.srvRecord?.host || "N/A",
+                debug: {
+                    query: data.query || false,
+                    srv: data.srvRecord ? true : false,
+                    cachehit: data.favicon ? true : false
+                }
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ status: false, message: 'Gagal mendapatkan data server', error: error.message });
+    }
 });
 
 app.get("/api/gpt", async (req, res) => {
