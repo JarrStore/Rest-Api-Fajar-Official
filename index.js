@@ -24,24 +24,6 @@ app.use(cors());
 app.use(secure);
 const port = 3000;
 
-app.get('/addapikey', async (req, res) => {
-    const { add } = req.query;
-
-    if (!add) {
-        return res.status(400).json({ success: false, message: "API key is required" });
-    }
-
-    let existingKey = await cekKey(add);
-    if (existingKey) {
-        return res.status(400).json({ success: false, message: "API key already exists" });
-    }
-
-    let newUser = new User({ apikey: add });
-    await newUser.save();
-
-    res.json({ success: true, message: "API key added successfully", apikey: add });
-});
-
 app.get('/stats', (req, res) => {
   const stats = {
     platform: os.platform(),
@@ -72,6 +54,24 @@ app.get('/', (req, res) => {
 
 app.get('/docs', (req, res) => {
   res.sendFile(path.join(__dirname, 'docs.html'));
+});
+
+app.get('/addapikey', async (req, res) => {
+    const { add } = req.query;
+
+    if (!add) {
+        return res.status(400).json({ success: false, message: "API key is required" });
+    }
+
+    let existingKey = await cekKey(add);
+    if (existingKey) {
+        return res.status(400).json({ success: false, message: "API key already exists" });
+    }
+
+    let newUser = new User({ apikey: add });
+    await newUser.save();
+
+    res.json({ success: true, message: "API key added successfully", apikey: add });
 });
 
 app.get('/api/samp', async (req, res) => {
