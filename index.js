@@ -47,7 +47,7 @@ app.get('/stats', (req, res) => {
   res.json(stats);
 });
 
-app.get('/', (req, res) => {
+app.get('/', isAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname,  'index.html'));
 });
 
