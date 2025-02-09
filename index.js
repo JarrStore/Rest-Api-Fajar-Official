@@ -57,24 +57,6 @@ app.get('/docs', (req, res) => {
   res.sendFile(path.join(__dirname, 'docs.html'));
 });
 
-app.get('/api/addapikey', async (req, res) => {
-    const add = req.query.add;
-
-    if (!add) {
-        return res.status(400).json({ success: false, message: "API key is required" });
-    }
-
-    let existingKey = await cekKey(add);
-    if (existingKey) {
-        return res.status(400).json({ success: false, message: "API key already exists" });
-    }
-
-    let newUser = new User({ apikey: add });
-    await newUser.save();
-
-    res.json({ success: true, message: "API key added successfully", apikey: add });
-});
-
 app.get('/api/samp', async (req, res) => {
     const { ip, port } = req.query;
 
@@ -110,6 +92,24 @@ app.get('/api/samp', async (req, res) => {
         console.error("Error handling request:", error);
         res.status(500).json({ error: "Terjadi kesalahan saat menghubungi server." });
     }
+});
+
+app.get('/api/addapikey', async (req, res) => {
+    const add = req.query.add;
+
+    if (!add) {
+        return res.status(400).json({ success: false, message: "API key is required" });
+    }
+
+    let existingKey = await cekKey(add);
+    if (existingKey) {
+        return res.status(400).json({ success: false, message: "API key already exists" });
+    }
+
+    let newUser = new User({ apikey: add });
+    await newUser.save();
+
+    res.json({ success: true, message: "API key added successfully", apikey: add });
 });
 
 app.get('/api/islam/niatmagrib', async (req, res, next) => {
