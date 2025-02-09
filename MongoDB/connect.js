@@ -1,5 +1,5 @@
+require('../settings');
 const mongoose = require('mongoose');
-const { MONGO_DB_URI } = require('../settings');
 
 function connectMongoDb() {
     mongoose.connect(MONGO_DB_URI, { 
@@ -9,7 +9,7 @@ function connectMongoDb() {
     const db = mongoose.connection;
     db.on('error', console.error.bind(console, 'connection error:'));
     db.once('open', () => {
-      console.log('[INFO] Connect to DB success!');
+      console.log('Succes connect to MONGODB ✅');
     });
 };
 
