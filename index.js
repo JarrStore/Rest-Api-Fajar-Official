@@ -9,6 +9,7 @@ const isUrl = require("is-url")
 const cheerio = require('cheerio');
 const toRupiah = require('./function/scraper/torupiah')
 
+const { isAuthenticated } = require('./lib/auth');
 const { connectMongoDb } = require('./MongoDB/mongodb');
 connectMongoDb();
 
