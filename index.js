@@ -9,6 +9,9 @@ const isUrl = require("is-url")
 const cheerio = require('cheerio');
 const util = require('minecraft-server-util');
 const toRupiah = require('./function/scraper/torupiah')
+const { mediafiredl } = require('@bochilteam/scraper');
+
+const creator = global.creator;
 
 var app = express();
 app.enable("trust proxy");
@@ -522,6 +525,47 @@ app.get('/api/game/minecraft', async (req, res) => {
         });
     } catch (error) {
         res.status(500).json({ status: false, message: 'Gagal mendapatkan data server', error: error.message });
+    }
+});
+
+app.get('/api/downloader/mediafire', async (req, res) => {
+    try {
+        const url = req.query.url;
+
+        if (!url) {
+            return res.status(400).json({
+                status: false,
+                message: 'Masukkan URL Mediafire!'
+            });
+        }
+
+        if (!url.match(/mediafire/gi)) {
+            return res.status(400).json({
+                status: false,
+                message: 'URL tidak valid, harus dari Mediafire!'
+            });
+        }
+
+        const result = await mediafiredl(url);
+
+        res.json({
+            status: true,
+            creator: creator,
+            result: {
+                filename: result.filename,
+                size: result.filesizeH,
+                extension: result.ext,
+                uploaded: result.aploud,
+                download_url: result.url
+            }
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            status: false,
+            message: 'Terjadi kesalahan saat memproses permintaan.',
+            error: error.message
+        });
     }
 });
 
