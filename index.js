@@ -281,17 +281,21 @@ app.get('/api/islam/jadwalshalat', async (req, res) => {
 
 app.get("/api/translate", async (req, res) => {
   const text = req.query.text;
-  if (!text) return res.status(400).json({ error: "Text is required." });
+  if (!text) {
+    return res.status(400).json({ error: "Text is required." });
+  }
 
   try {
-    const response = await axios.get(`https://api.siputzx.my.id/api/tools/translate`, {
-      params: { text: text, source: "auto", target: "id" }
+    const response = await axios.get("https://api.siputzx.my.id/api/tools/translate", {
+      params: { text: text, source: "auto", target: "id" },
     });
+
     res.json({ 
-      creator: "Fajar Official" 
-      result: response.data.translatedText 
+      creator: "Fajar Official",
+      result: response.data.translatedText
     });
-  } catch {
+  } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "An error occurred while processing the translation." });
   }
 });
