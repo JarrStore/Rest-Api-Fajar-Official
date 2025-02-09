@@ -13,7 +13,6 @@ const malScraper = require('mal-scraper');
 const { User } = require('./MongoDB/model');
 
 const { connectMongoDb } = require('./MongoDB/connect');
-connectMongoDb();
 
 var creator = global.creator;
 
@@ -697,6 +696,8 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Ada kesalahan pada server');
 });
+
+connectMongoDb();
 
 app.listen(port, () => {
   console.log(`Server berjalan di http://localhost:${port}`);
