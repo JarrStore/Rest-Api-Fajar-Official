@@ -10,6 +10,7 @@ const cheerio = require('cheerio');
 const util = require('minecraft-server-util');
 const toRupiah = require('./function/scraper/torupiah')
 const malScraper = require('mal-scraper');
+const cekKey = require('./MongoDB/function')
 
 const { connectMongoDb } = require('./MongoDB/connect');
 connectMongoDb();
@@ -23,6 +24,23 @@ app.use(cors());
 app.use(secure);
 const port = 3000;
 
+app.get('/addapikey', async (req, res) => {
+    const { add } = req.query;
+
+    if (!add) {
+        return res.status(400).json({ success: false, message: "API key is required" });
+    }
+
+    let existingKey = await cekKey(add);
+    if (existingKey) {
+        return res.status(400).json({ success: false, message: "API key already exists" });
+    }
+
+    let newUser = new User({ apikey: add });
+    await newUser.save();
+
+    res.json({ success: true, message: "API key added successfully", apikey: add });
+});
 
 app.get('/stats', (req, res) => {
   const stats = {
