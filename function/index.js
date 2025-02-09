@@ -6,5 +6,6 @@ module.exports = {
   pinterest: require('./scraper/pinterest'),
   tiktokSearchVideo: require('./scraper/tiktoksearch'),
   npmstalk: require('./scraper/npmstalk'),
-  PlayStore: require('./scraper/PlayStore')
+  PlayStore: require('./scraper/PlayStore'),
+  cekKey: require('../MongoDB/function')
 }
