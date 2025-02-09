@@ -19,6 +19,7 @@
     "crypto": "^1.0.1",
     "node-fetch": "^2.6.1",
     "nodemailer": "^6.6.3",
+    "mongoose": "^5.13.5",
     "express": "^4.19.2",
     "query": "^0.2.0",
     "emoji-api": "^3.0.1",
