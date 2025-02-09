@@ -9,6 +9,7 @@ const isUrl = require("is-url")
 const cheerio = require('cheerio');
 const util = require('minecraft-server-util');
 const toRupiah = require('./function/scraper/torupiah')
+const malScraper = require('mal-scraper');
 
 var creator = global.creator;
 
@@ -569,6 +570,59 @@ app.get('/api/search/playstore', async (req, res) => {
         });
     }
 });
+
+app.get('/api/search/anime', async (req, res) => {
+    const nama = req.query.nama;
+
+    if (!nama) {
+        return res.json({
+            status: false,
+            message: "⚠️ *Judul anime-nya mana?* Coba ketik nama anime yang mau dicari ya!"
+        });
+    }
+
+    try {
+        const anime = await malScraper.getInfoFromName(nama).catch(() => null);
+
+        if (!anime) {
+            return res.json({
+                status: false,
+                message: "❌ *Yahh, anime yang Kakak cari gak ketemu...* 🥺 Coba ketik judul yang lebih spesifik ya!"
+            });
+        }
+
+        let animeInfo = {
+            title: anime.title,
+            type: anime.type,
+            premiered: anime.premiered || '-',
+            episodes: anime.episodes || '-',
+            status: anime.status || '-',
+            genres: anime.genres || '-',
+            studios: anime.studios || '-',
+            score: anime.score || '-',
+            rating: anime.rating || '-',
+            ranked: anime.ranked || '-',
+            popularity: anime.popularity || '-',
+            trailer: anime.trailer || '-',
+            url: anime.url || '-',
+            synopsis: anime.synopsis || 'Tidak ada deskripsi tersedia.',
+            picture: anime.picture || 'default-image-url'
+        };
+
+        res.json({
+            status: true,
+            creator: `${creator}`,
+            result: animeInfo
+        });
+
+    } catch (error) {
+        res.json({
+            status: false,
+            message: "❌ Terjadi kesalahan saat mencari data anime. Silakan coba lagi."
+        });
+    }
+});
+
 
 app.get("/api/gpt", async (req, res) => {
 const text = req.query.text;
