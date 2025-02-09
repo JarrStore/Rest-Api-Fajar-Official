@@ -10,7 +10,6 @@ const cheerio = require('cheerio');
 const util = require('minecraft-server-util');
 const toRupiah = require('./function/scraper/torupiah')
 const malScraper = require('mal-scraper');
-const { User } = require('./MongoDB/model');
 
 var creator = global.creator;
 
@@ -621,24 +620,6 @@ app.get('/api/search/anime', async (req, res) => {
             message: "❌ Terjadi kesalahan saat mencari data anime. Silakan coba lagi."
         });
     }
-});
-
-app.get('/api/addapikey', async (req, res) => {
-    const add = req.query.add;
-
-    if (!add) {
-        return res.status(400).json({ success: false, message: "API key is required" });
-    }
-
-    let existingKey = await ptz.cekKey(add);
-    if (existingKey) {
-        return res.status(400).json({ success: false, message: "API key already exists" });
-    }
-
-    let newUser = new User({ apikey: add });
-    await newUser.save();
-
-    res.json({ success: true, message: "API key added successfully", apikey: add });
 });
 
 app.get('/api/game/tembakgambar', async (req, res, next) => {
