@@ -23,6 +23,7 @@
     "query": "^0.2.0",
     "emoji-api": "^3.0.1",
     "g-i-s": "^2.1.7",
+    "minecraft-server-util": "^5.4.4",
     "tiktokdl": "^0.0.5",
     "ssl-express-www": "^3.2.1"
   }
