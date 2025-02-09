@@ -168,7 +168,6 @@ app.get('/api/islam/niatisya', async (req, res) => {
         })
 });
 
-
 app.get('/api/islam/niatashar', async (req, res) => {
     
     fetch(encodeURI(`https://raw.githubusercontent.com/zeeoneofficial/My-SQL-Results/master/data/NiatIsya.json`))
@@ -669,7 +668,6 @@ console.error(error);
 res.status(500).send("Internal Server Error");
 }
 });
-
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
