@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-const { dbURI } = require('../lib/settings');
+const { MONGO_DB_URI } = require('../settings');
 
 function connectMongoDb() {
-    mongoose.connect(dbURI, { 
+    mongoose.connect(MONGO_DB_URI, { 
       useNewUrlParser: true, 
       useUnifiedTopology: true
     });
