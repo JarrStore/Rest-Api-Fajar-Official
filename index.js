@@ -9,7 +9,6 @@ const isUrl = require("is-url")
 const cheerio = require('cheerio');
 const util = require('minecraft-server-util');
 const toRupiah = require('./function/scraper/torupiah')
-const { mediafiredl } = require('@bochilteam/scraper');
 
 var creator = global.creator;
 
@@ -529,44 +528,36 @@ app.get('/api/game/minecraft', async (req, res) => {
 });
 
 app.get('/api/downloader/mediafire', async (req, res) => {
-    try {
-        const url = req.query.url;
+  const url = req.query.url; // get the URL from the query parameters
 
-        if (!url) {
-            return res.status(400).json({
-                status: false,
-                message: 'Masukkan URL Mediafire!'
-            });
-        }
+  if (!url) {
+    return res.json({ status: false, message: 'URL is required' });
+  }
 
-        if (!url.match(/mediafire/gi)) {
-            return res.status(400).json({
-                status: false,
-                message: 'URL tidak valid, harus dari Mediafire!'
-            });
-        }
+  if (!url.includes('mediafire.com')) {
+    return res.json({ status: false, message: 'Invalid MediaFire URL' });
+  }
 
-        const result = await mediafiredl(url);
-
-        res.json({
-            status: true,
-            creator: `${creator}`,
-            result: {
-                filename: result.filename,
-                size: result.filesizeH,
-                extension: result.ext,
-                uploaded: result.aploud,
-                download_url: result.url
-            }
-        });
-
-    } catch (error) {
-        res.status(500).json({
-            status: false,
-            message: 'Terjadi kesalahan saat memproses permintaan.',
-            error: error.message
-        });
+  try {
+    const result = await ptz.mediafire(url);
+    if (!result.link) {
+      return res.json({ status: false, message: 'Error! Result Not Found' });
     }
+    
+    res.json({
+      status: true,
+      creator: `${creator}`,
+      result: {
+        title: result.judul,
+        upload_date: result.upload_date,
+        size: result.size,
+        mime: result.mime,
+        download_link: result.link
+      }
+    });
+  } catch (error) {
+    res.json({ status: false, message: 'Error occurred while fetching data' });
+  }
 });
 
 app.get("/api/gpt", async (req, res) => {
