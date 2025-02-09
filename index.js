@@ -487,7 +487,7 @@ app.get('/api/stalker/npm', async (req, res) => {
 
 app.get('/api/game/minecraft', async (req, res) => {
     const host = req.query.host;
-    const port = req.query.port;
+    const port = parseInt(req.query.port);
 
     if (!host) {
         return res.status(400).json({ status: false, message: 'Parameter host Dan Port diperlukan' });
