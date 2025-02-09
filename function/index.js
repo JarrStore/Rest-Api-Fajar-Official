@@ -7,5 +7,6 @@ module.exports = {
   tiktokSearchVideo: require('./scraper/tiktoksearch'),
   npmstalk: require('./scraper/npmstalk'),
   PlayStore: require('./scraper/PlayStore'),
-  cekKey: require('../MongoDB/function')
+  cekKey: require('../MongoDB/function'),
+  tebakgambar: require('./scraper/tebakgambar')
 }
