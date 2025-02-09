@@ -49,7 +49,7 @@ app.get('/docs', (req, res) => {
   res.sendFile(path.join(__dirname, 'docs.html'));
 });
 
-app.get('/api/samp', isAuthenticated, async (req, res) => {
+app.get('/api/samp', async (req, res) => {
     const { ip, port } = req.query;
 
     if (!ip || !port) {
