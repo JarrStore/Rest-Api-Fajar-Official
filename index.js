@@ -12,8 +12,6 @@ const toRupiah = require('./function/scraper/torupiah')
 const malScraper = require('mal-scraper');
 const { User } = require('./MongoDB/model');
 
-const { connectMongoDb } = require('./MongoDB/connect');
-
 var creator = global.creator;
 
 var app = express();
