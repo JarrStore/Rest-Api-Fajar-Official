@@ -1,16 +1,5 @@
 const cloudscraper = require('cloudscraper');
 
-async function getUserId(username) {
-    const url = `https://api.roblox.com/users/get-by-username?username=${username}`;
-    try {
-        const response = await cloudscraper.get(url);
-        const data = JSON.parse(response);
-        return data.Id ? data.Id : null;
-    } catch (error) {
-        return null;
-    }
-}
-
 // Fungsi untuk mendapatkan informasi pengguna
 async function getUserInfo(userId) {
     const url = `https://users.roblox.com/v1/users/${userId}`;
@@ -67,4 +56,21 @@ async function getUserGroups(userId) {
     }
 }
 
-module.exports = getUserId
+// Fungsi utama untuk menggabungkan semua data
+async function robloxStalk(userId) {
+    const userInfo = await getUserInfo(userId);
+    const userSocials = await getUserSocials(userId);
+    const userInventory = await getUserInventory(userId);
+    const userPresence = await getUserPresence(userId);
+    const userGroups = await getUserGroups(userId);
+
+    return {
+        userInfo,
+        userSocials,
+        userInventory,
+        userPresence,
+        userGroups,
+    };
+}
+
+module.exports = robloxStalk
