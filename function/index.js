@@ -7,5 +7,5 @@ module.exports = {
   tiktokSearchVideo: require('./scraper/tiktoksearch'),
   npmstalk: require('./scraper/npmstalk'),
   PlayStore: require('./scraper/PlayStore'),
-  getUserId: require('./scraper/robloxstalk')
+  robloxStalk: require('./scraper/robloxstalk')
 }
