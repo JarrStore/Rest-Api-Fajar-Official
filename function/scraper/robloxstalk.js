@@ -1,5 +1,19 @@
 const cloudscraper = require('cloudscraper');
 
+// Fungsi untuk mendapatkan User ID dari Username
+async function getUserId(username) {
+    const url = `https://users.roblox.com/v1/usernames/users`;
+    const payload = { usernames: [username], excludeBannedUsers: true };
+
+    try {
+        const response = await cloudscraper.post(url, { json: payload });
+        const data = response.data;
+        return data.data.length > 0 ? data.data[0].id : null;
+    } catch {
+        return null;
+    }
+}
+
 // Fungsi untuk mendapatkan informasi pengguna
 async function getUserInfo(userId) {
     const url = `https://users.roblox.com/v1/users/${userId}`;
@@ -57,7 +71,16 @@ async function getUserGroups(userId) {
 }
 
 // Fungsi utama untuk menggabungkan semua data
-async function robloxStalk(userId) {
+async function robloxStalk(usernameOrId) {
+    let userId = usernameOrId;
+
+    // Jika input adalah username, ubah ke userId
+    if (isNaN(usernameOrId)) {
+        userId = await getUserId(usernameOrId);
+        if (!userId) return { error: 'Username tidak ditemukan' };
+    }
+
+    // Ambil semua data
     const userInfo = await getUserInfo(userId);
     const userSocials = await getUserSocials(userId);
     const userInventory = await getUserInventory(userId);
