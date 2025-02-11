@@ -621,6 +621,24 @@ app.get('/api/search/anime', async (req, res) => {
     }
 });
 
+app.get('/api/stalker/roblox', async (req, res) => {
+    const userId = req.query.userId; // Pastikan Anda mengirim userId, bukan username
+    if (!userId) {
+        return res.status(400).json({ status: false, message: 'Parameter "userId" wajib diisi' });
+    }
+
+    try {
+        const result = await ptz.robloxStalk(userId);
+        res.json({
+            status: true,
+            Creator: `${creator}`,
+            results: result,
+        });
+    } catch (error) {
+        res.status(500).json({ status: false, message: 'Gagal mengambil data pengguna', error });
+    }
+});
+
 
 app.get("/api/gpt", async (req, res) => {
 const text = req.query.text;
