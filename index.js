@@ -621,28 +621,6 @@ app.get('/api/search/anime', async (req, res) => {
     }
 });
 
-app.get('/api/search/ssweb', async (req, res) => {
-    const url = req.query.url;
-    const device = req.query.device || 'desktop';
-
-    if (!url) {
-        return res.status(400).json({ status: false, message: 'Parameter "url" wajib diisi' });
-    }
-
-    try {
-        const screenshot = await ptz.ssweb(url, device);
-        res.json({
-            status: true,
-            Creator: `${creator}`,
-            results: {
-                image: `data:image/png;base64,${screenshot.result.toString('base64')}`
-            }
-        });
-    } catch (error) {
-        res.status(500).json({ status: false, message: 'Gagal mengambil screenshot', error });
-    }
-});
-
 
 app.get("/api/gpt", async (req, res) => {
 const text = req.query.text;
