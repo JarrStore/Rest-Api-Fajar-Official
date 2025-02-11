@@ -7,5 +7,6 @@ module.exports = {
   tiktokSearchVideo: require('./scraper/tiktoksearch'),
   npmstalk: require('./scraper/npmstalk'),
   PlayStore: require('./scraper/PlayStore'),
-  tebakgambar: require('./scraper/tebakgambar')
+  tebakgambar: require('./scraper/tebakgambar'),
+  ssweb: require('./scraper/ssweb')
 }
