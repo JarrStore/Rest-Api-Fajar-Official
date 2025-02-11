@@ -26,6 +26,7 @@
     "mal-scraper": "^2.13.2",
     "minecraft-server-util": "^5.4.4",
     "tiktokdl": "^0.0.5",
+    "cloudscraper": "^4.6.0",
     "ssl-express-www": "^3.2.1"
   }
 }
