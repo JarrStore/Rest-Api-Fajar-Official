@@ -107,43 +107,6 @@ app.get('/api/islam/niatmagrib', async (req, res, next) => {
         })
 });
 
-app.get("/api/orkut/createpayment", (req, res) => {
-    const amount = req.query.amount;
-    const urlqris = req.query.urlqris;
-
-    if (!amount || !urlqris) {
-        return res.status(400).json({
-            status: false,
-            message: "Parameter 'amount' dan 'urlqris' diperlukan.",
-        });
-    }
-
-    // Simulasi data transaksi
-    const transactionId = `TXN${Date.now()}`;
-    const createdAt = new Date();
-    const expiredAt = new Date(createdAt.getTime() + 15 * 60000); // Expired dalam 15 menit
-
-    const paymentData = {
-        transaction_id: transactionId,
-        amount: parseFloat(amount), // Konversi ke angka
-        currency: "IDR",
-        payment_status: "pending",
-        qris_url: urlqris,
-        qris_image: `${urlqris}.png`, // Gambar QRIS dengan ekstensi .png
-        merchant_name: "Merchant Example", // Bisa diambil dari database
-        payment_method: "QRIS",
-        created_at: createdAt.toISOString(),
-        expired_at: expiredAt.toISOString(),
-    };
-
-    res.json({
-        status: true,
-        Creator: creator,
-        message: "Pembayaran berhasil dibuat.",
-        results: paymentData,
-    });
-});
-
 app.get('/api/downloader/capcut', async (req, res) => {
     const { url } = req.query; // Extract URL from query parameter
 
