@@ -28,6 +28,7 @@
     "tiktokdl": "^0.0.5",
     "cloudscraper": "^4.6.0",
     "yt-search": "^2.10.3",
+    "millify": "^5.0.1",
     "ytdl-core": "^4.11.5",
     "ssl-express-www": "^3.2.1"
   }
