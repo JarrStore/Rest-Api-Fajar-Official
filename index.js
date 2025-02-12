@@ -10,7 +10,6 @@ const cheerio = require('cheerio');
 const util = require('minecraft-server-util');
 const toRupiah = require('./function/scraper/torupiah')
 const malScraper = require('mal-scraper');
-const { ytMp4, ytMp3 } = require('./function/scraper/y2mate')
 
 var creator = global.creator;
 
@@ -301,57 +300,6 @@ app.get("/api/translate", async (req, res) => {
     console.error(error);
     res.status(500).json({ error: "An error occurred while processing the translation." });
   }
-});
-
-app.get('/api/search/ytplay', async (req, res, next) => {
-    try {
-        const text1 = req.query.text;
-        if (!text1) {
-            return res.json({ 
-                status: false, 
-                creator: `${creator}`, 
-                message: "[!] Masukkan parameter text" 
-            });
-        }
-
-        const yts = require("yt-search");
-        const search = await yts(text1);
-        const url = search.all[Math.floor(Math.random() * search.all.length)];
-
-        const mp3 = await ytMp3(url.url);
-        const mp4 = await ytMp4(url.url);
-
-        if (!mp4 || !mp3) {
-            return res.json(loghandler.noturl);
-        }
-
-        res.json({
-            status: true,
-            creator: `${creator}`,
-            result: {
-                title: mp4.title,
-                desc: mp4.desc,
-                thum: mp4.thumb,
-                view: mp4.views,
-                channel: mp4.channel,
-                ago: url.ago,
-                timestamp: url.timestamp,
-                uploadDate: mp4.uploadDate,
-                author: url.author,
-                mp4: {
-                    result: mp4.result,
-                    size: mp4.size,
-                    quality: mp4.quality
-                },
-                mp3: {
-                    result: mp3.result,
-                    size: mp3.size
-                }
-            }
-        });
-    } catch (error) {
-        next(error);
-    }
 });
 
 app.get('/api/search/ttstalk', async (req, res) => {
