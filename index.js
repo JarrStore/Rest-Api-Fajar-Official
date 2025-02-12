@@ -303,7 +303,7 @@ app.get("/api/translate", async (req, res) => {
   }
 });
 
-app.get('/api/search/ytplay', cekKey, async (req, res, next) => {
+app.get('/api/search/ytplay', async (req, res, next) => {
     try {
         const text1 = req.query.text;
         if (!text1) {
