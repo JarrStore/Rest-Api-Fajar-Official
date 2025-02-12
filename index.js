@@ -10,6 +10,7 @@ const cheerio = require('cheerio');
 const util = require('minecraft-server-util');
 const toRupiah = require('./function/scraper/torupiah')
 const malScraper = require('mal-scraper');
+const { ytMp4, ytMp3 } = require('./function/scraper/y2mate')
 
 var creator = global.creator;
 
@@ -302,27 +303,54 @@ app.get("/api/translate", async (req, res) => {
   }
 });
 
-app.get("/api/ytmp3", async (req, res) => {
-    const url = req.query.url;
-    if (!url) return res.status(400).json({ error: "Url is required." });
-
+app.get('/api/search/ytplay', cekKey, async (req, res, next) => {
     try {
-        const response = await axios.get(`https://api.siputzx.my.id/api/d/youtube?q=${url}`);
-        const data = response.data;
+        const text1 = req.query.text;
+        if (!text1) {
+            return res.json({ 
+                status: false, 
+                creator: `${creator}`, 
+                message: "[!] Masukkan parameter text" 
+            });
+        }
+
+        const yts = require("yt-search");
+        const search = await yts(text1);
+        const url = search.all[Math.floor(Math.random() * search.all.length)];
+
+        const mp3 = await ytMp3(url.url);
+        const mp4 = await ytMp4(url.url);
+
+        if (!mp4 || !mp3) {
+            return res.json(loghandler.noturl);
+        }
 
         res.json({
             status: true,
-            creator: "Fajar Official",
+            creator: `${creator}`,
             result: {
-                Judul: data.data.title,
-                thumbnail: data.data.thumbnailUrl,
-                durasi: data.data.duration,
-                UrlDownload: data.data.sounds
+                title: mp4.title,
+                desc: mp4.desc,
+                thum: mp4.thumb,
+                view: mp4.views,
+                channel: mp4.channel,
+                ago: url.ago,
+                timestamp: url.timestamp,
+                uploadDate: mp4.uploadDate,
+                author: url.author,
+                mp4: {
+                    result: mp4.result,
+                    size: mp4.size,
+                    quality: mp4.quality
+                },
+                mp3: {
+                    result: mp3.result,
+                    size: mp3.size
+                }
             }
         });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "An error occurred while fetching data." });
+        next(error);
     }
 });
 
