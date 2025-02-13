@@ -55,6 +55,18 @@ app.get('/docs', (req, res) => {
   res.sendFile(path.join(__dirname, 'docs.html'));
 });
 
+app.get('/api/statusrestapi', async (req, res) => {
+    const stats = await getStats();
+
+    res.json({
+        status: true,
+        Creator: creator,
+        results: {
+            "Total Request": stats.totalRequests,
+            "Total Pengguna Apikey": stats.totalPenggunaApikey
+        }
+    });
+});
 
 app.get('/api/game/samp', async (req, res) => {
     const { ip, port, apikey } = req.query;
