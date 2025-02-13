@@ -795,6 +795,14 @@ res.status(500).send("Internal Server Error");
 }
 });
 
+app.use((req, res, next) => {
+    const allowedIP = global.allowedIP;
+    if (global.maintenance && req.ip !== allowedIP) {
+        return res.sendFile(path.join(__dirname, 'view', 'maintancemode.html'));
+    }
+    next();
+});
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Ada kesalahan pada server');
