@@ -126,6 +126,7 @@ app.get('/api/game/samp', async (req, res) => {
         if (serverStatus) {
             totalRequests++;
     totalPenggunaApikey++;
+            saveData({ totalRequests, totalPenggunaApikey });
 
             res.json({
                 status: true,
