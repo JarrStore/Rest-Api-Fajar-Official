@@ -1,10 +1,7 @@
-const mongoose = require('./connect');
+const mongoose = require('mongoose');
 
-const statsSchema = new mongoose.Schema({
+const Users = mongoose.Schema({
     totalRequests: { type: Number, default: 0 },
     totalPenggunaApikey: { type: Number, default: 0 }
-});
-
-const Stats = mongoose.model("Stats", statsSchema);
-
-module.exports = Stats;
+}, { versionKey: false });
+module.exports.User = mongoose.model('api', Users);
