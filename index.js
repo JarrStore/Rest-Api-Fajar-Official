@@ -20,34 +20,6 @@ app.use(cors());
 app.use(secure);
 const port = 3000;
 
-function getApikey() {
-    return { apikey: "fajarofficial" }; // API key default
-}
-
-// Fungsi untuk mengecek apakah API key valid
-function checkApikey(apikey) {
-    const validApikey = getApikey().apikey;
-    return apikey === validApikey;
-}
-
-const FILE_PATH = 'restapi.txt';
-
-function readData() {
-    try {
-        const data = fs.readFileSync(FILE_PATH, 'utf8');
-        return JSON.parse(data);
-    } catch (error) {
-        return { totalRequests: 0, totalPenggunaApikey: 0 };
-    }
-}
-
-// Fungsi menyimpan data ke file
-function saveData(data) {
-    fs.writeFileSync(FILE_PATH, JSON.stringify(data, null, 2));
-}
-
-// Inisialisasi data dari file
-let { totalRequests, totalPenggunaApikey } = readData();
 
 app.get('/stats', (req, res) => {
   const stats = {
@@ -81,16 +53,6 @@ app.get('/docs', (req, res) => {
   res.sendFile(path.join(__dirname, 'docs.html'));
 });
 
-app.get('/api/statusrestapi', (req, res) => {
-    res.json({
-        status: true,
-        Creator: creator,
-        results: {
-            "Total Request": totalRequests,
-            "Total Pengguna Apikey": totalPenggunaApikey
-        }
-    });
-});
 
 app.get('/api/game/samp', async (req, res) => {
     const { ip, port, apikey } = req.query;
@@ -123,13 +85,7 @@ app.get('/api/game/samp', async (req, res) => {
         const serverStatus = await ptz.getServerStatus(ip, port);
 
         if (serverStatus) {
-            // **Tambahkan total request dan penggunaan API key**
-            totalRequests++;
-            totalPenggunaApikey++;
-
-            // **Simpan data ke file**
-            saveData({ totalRequests, totalPenggunaApikey });
-
+    
             res.json({
                 status: true,
                 total_requests: totalRequests,
