@@ -81,7 +81,16 @@ app.get('/docs', (req, res) => {
   res.sendFile(path.join(__dirname, 'docs.html'));
 });
 
-
+app.get('/api/statusrestapi', (req, res) => {
+    res.json({
+        status: true,
+        Creator: creator,
+        results: {
+            "Total Request": totalRequests,
+            "Total Pengguna Apikey": totalPenggunaApikey
+        }
+    });
+});
 
 app.get('/api/game/samp', async (req, res) => {
     const { ip, port } = req.query;
