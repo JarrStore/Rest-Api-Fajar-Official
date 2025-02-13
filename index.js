@@ -11,8 +11,8 @@ const util = require('minecraft-server-util');
 const toRupiah = require('./function/scraper/torupiah')
 const malScraper = require('mal-scraper');
 const { checkApikey, updateStats, getStats } = require('./MongoDB/function');
-const { ConnectMongoDb } = require('./MongoDB/connect');
-ConnectMongoDb();
+const { mongoose } = require('./MongoDB/connect');
+mongoose();
 var creator = global.creator;
 
 var app = express();
