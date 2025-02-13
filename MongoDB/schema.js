@@ -1,7 +1,10 @@
-const mongoose = require('mongoose');
+const mongoose = require('./connect'); // Menggunakan koneksi dari connect.js
 
-const Stats = mongoose.Schema({
+const statsSchema = new mongoose.Schema({
     totalRequests: { type: Number, default: 0 },
     totalPenggunaApikey: { type: Number, default: 0 }
 }, { versionKey: false });
-module.exports.Stats = mongoose.model('api', Stats);
+
+const Stats = mongoose.model('Stats', statsSchema);
+
+module.exports = Stats;
