@@ -798,7 +798,7 @@ res.status(500).send("Internal Server Error");
 app.use((req, res, next) => {
     const allowedIP = global.allowedIP;
     if (global.maintenance && req.ip !== allowedIP) {
-        return res.sendFile(path.join(__dirname, 'view', 'maintancemode.html'));
+        return res.sendFile(path.join(__dirname, 'views', 'maintancemode.html'));
     }
     next();
 });
