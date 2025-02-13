@@ -20,6 +20,17 @@ app.use(cors());
 app.use(secure);
 const port = 3000;
 
+let totalRequests = 0;
+function getApikey() {
+    return { apikey: "fajarofficial" }; // API key default
+}
+
+// Fungsi untuk mengecek apakah API key valid
+function checkApikey(apikey) {
+    const validApikey = getApikey().apikey;
+    return apikey === validApikey;
+}
+
 app.get('/stats', (req, res) => {
   const stats = {
     platform: os.platform(),
@@ -52,19 +63,43 @@ app.get('/docs', (req, res) => {
   res.sendFile(path.join(__dirname, 'docs.html'));
 });
 
-app.get('/api/samp', async (req, res) => {
+app.get('/api/game/samp', async (req, res) => {
     const { ip, port } = req.query;
+    const apikey = req.query.apikey; // Ambil API key dari query parameter
+
+    if (!apikey) {
+        return res.status(403).json({
+            status: 403,
+            message: "Apikey Dibutuhkan",
+            result: "error"
+        });
+    }
+
+    if (!checkApikey(apikey)) {
+        return res.status(403).json({
+            status: 403,
+            message: "Apikey Tidak Valid",
+            result: "error"
+        });
+    }
 
     if (!ip || !port) {
-        return res.status(400).json({ error: "Harap sertakan IP dan port dalam permintaan." });
+        return res.status(400).json({
+            status: 400,
+            message: "Harap sertakan IP dan port dalam permintaan.",
+            result: "error"
+        });
     }
 
     try {
         const serverStatus = await ptz.getServerStatus(ip, port);
 
         if (serverStatus) {
+            totalRequests++; // Tambahkan total request hanya jika berhasil
+
             res.json({
                 status: true,
+                total_requests: totalRequests,
                 results: {
                     IPServer: serverStatus.ip,
                     PortServer: serverStatus.port,
@@ -85,7 +120,7 @@ app.get('/api/samp', async (req, res) => {
         }
     } catch (error) {
         console.error("Error handling request:", error);
-        res.status(500).json({ error: "Terjadi kesalahan saat menghubungi server." });
+        res.status(500).json({ status: false, error: "Terjadi kesalahan saat menghubungi server." });
     }
 });
 
