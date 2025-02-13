@@ -795,8 +795,14 @@ res.status(500).send("Internal Server Error");
 }
 });
 
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Ada kesalahan pada server');
+});
+
 const maintanance = true;
-const allowedIP = '124.158.189.8999';
+const allowedIP = '124.158.189.89999';
 
 app.use((req, res, next) => {
     if (maintanance && req.ip !== allowedIP) {
@@ -804,11 +810,6 @@ app.use((req, res, next) => {
     } else {
         next();
     }
-});
-
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Ada kesalahan pada server');
 });
 
 app.listen(port, () => {
