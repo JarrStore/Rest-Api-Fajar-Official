@@ -795,22 +795,15 @@ res.status(500).send("Internal Server Error");
 }
 });
 
-global.maintenance = true;
+const maintanance = true;
+const allowedIP = '124.158.189.8999';
 
-// Middleware untuk mendapatkan IP asli pengguna (support proxy)
-app.set('trust proxy', true);
-
-// Middleware untuk Maintenance Mode
 app.use((req, res, next) => {
-    const allowedIP = '124.158.189.899'; // IP yang diizinkan mengakses
-    const userIP = req.ip; // IP pengguna
-
-    console.log(`User IP: ${userIP}`); // Debugging
-
-    if (global.maintenance && userIP !== allowedIP) {
-        return res.sendFile(path.join(__dirname, 'views', 'maintancemode.html'));
+    if (maintanance && req.ip !== allowedIP) {
+        res.sendFile(path.join(__dirname, 'views', 'maintancemode.html'));
+    } else {
+        next();
     }
-    next();
 });
 
 app.use((err, req, res, next) => {
