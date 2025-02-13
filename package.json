@@ -30,6 +30,8 @@
     "yt-search": "^2.10.3",
     "millify": "^5.0.1",
     "ytdl-core": "^4.11.5",
+    "mongoose": "^5.13.5",
+    "mongodb": "^3.6.3",
     "ssl-express-www": "^3.2.1"
   }
 }
