@@ -10,7 +10,9 @@ const cheerio = require('cheerio');
 const util = require('minecraft-server-util');
 const toRupiah = require('./function/scraper/torupiah')
 const malScraper = require('mal-scraper');
-
+const { checkApikey, updateStats, getStats } = require('./MongoDB/function');
+const { ConnectMongoDb } = require('./MongoDB/connect');
+ConnectMongoDb();
 var creator = global.creator;
 
 var app = express();
