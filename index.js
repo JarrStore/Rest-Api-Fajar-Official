@@ -87,11 +87,10 @@ app.get('/api/game/samp', async (req, res) => {
         const serverStatus = await ptz.getServerStatus(ip, port);
 
         if (serverStatus) {
+          const stats = await updateStats();
     
             res.json({
                 status: true,
-                total_requests: totalRequests,
-                total_pengguna_apikey: totalPenggunaApikey,
                 results: {
                     IPServer: serverStatus.ip,
                     PortServer: serverStatus.port,
