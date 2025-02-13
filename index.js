@@ -21,6 +21,7 @@ app.use(secure);
 const port = 3000;
 
 let totalRequests = 0;
+let totalPenggunaApikey = 0;
 function getApikey() {
     return { apikey: "fajarofficial" }; // API key default
 }
@@ -61,6 +62,17 @@ app.get('/', (req, res) => {
 
 app.get('/docs', (req, res) => {
   res.sendFile(path.join(__dirname, 'docs.html'));
+});
+
+app.get('/api/statusrestapi', (req, res) => {
+    res.json({
+        status: true,
+        Creator: `${creator}`,
+        results: {
+            "Total Request": totalRequests,
+            "Total Pengguna Apikey": totalPenggunaApikey
+        }
+    });
 });
 
 app.get('/api/game/samp', async (req, res) => {
