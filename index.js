@@ -93,8 +93,7 @@ app.get('/api/statusrestapi', (req, res) => {
 });
 
 app.get('/api/game/samp', async (req, res) => {
-    const { ip, port } = req.query;
-    const apikey = req.query.apikey; // Ambil API key dari query parameter
+    const { ip, port, apikey } = req.query;
 
     if (!apikey) {
         return res.status(403).json({
@@ -124,13 +123,17 @@ app.get('/api/game/samp', async (req, res) => {
         const serverStatus = await ptz.getServerStatus(ip, port);
 
         if (serverStatus) {
+            // **Tambahkan total request dan penggunaan API key**
             totalRequests++;
-    totalPenggunaApikey++;
+            totalPenggunaApikey++;
+
+            // **Simpan data ke file**
             saveData({ totalRequests, totalPenggunaApikey });
 
             res.json({
                 status: true,
                 total_requests: totalRequests,
+                total_pengguna_apikey: totalPenggunaApikey,
                 results: {
                     IPServer: serverStatus.ip,
                     PortServer: serverStatus.port,
@@ -154,7 +157,6 @@ app.get('/api/game/samp', async (req, res) => {
         res.status(500).json({ status: false, error: "Terjadi kesalahan saat menghubungi server." });
     }
 });
-
 app.get('/api/islam/niatmagrib', async (req, res, next) => {
     var apikey = req.query.apikey
     var text = req.query.page
