@@ -1,6 +1,8 @@
 
 global. creator = "Fajar Official"
 global.MONGO_DB_URI = "mongodb+srv://fajarshidik709:5xDc3VO36uCBZq5N@cluster0.qqz27.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0" //database mongodb
+global.maintenance = true
+global.allowedIP = "1"
 global.your_email = "" //email
 global.email_password = "" //application password email
 
