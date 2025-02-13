@@ -802,10 +802,11 @@ app.use((err, req, res, next) => {
 });
 
 const maintanance = true;
-const allowedIP = '::ffff:124.158.189.8999'; // Format IPv6 untuk alamat IPv4
+const allowedIP = '124.158.189.89';
 
 app.use((req, res, next) => {
-    if (maintanance && req.ip !== allowedIP) {
+    const clientIP = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    if (maintanance && clientIP !== `::ffff:${allowedIP}`) {
         return res.sendFile(path.join(__dirname, 'views', 'maintancemode.html'));
     }
     next();
