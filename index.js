@@ -802,14 +802,13 @@ app.use((err, req, res, next) => {
 });
 
 const maintanance = true;
-const allowedIP = '124.158.189.89999';
+const allowedIP = '::ffff:124.158.189.8999'; // Format IPv6 untuk alamat IPv4
 
 app.use((req, res, next) => {
     if (maintanance && req.ip !== allowedIP) {
-        res.sendFile(path.join(__dirname, 'views', 'maintancemode.html'));
-    } else {
-        next();
+        return res.sendFile(path.join(__dirname, 'views', 'maintancemode.html'));
     }
+    next();
 });
 
 app.listen(port, () => {
