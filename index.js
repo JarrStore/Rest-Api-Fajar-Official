@@ -801,7 +801,7 @@ app.use((err, req, res, next) => {
   res.status(500).send('Ada kesalahan pada server');
 });
 
-const maintanance = true;
+const maintanance = false;
 const allowedIP = '124.158.189.89';
 
 app.use((req, res, next) => {
